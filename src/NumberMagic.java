@@ -1,29 +1,42 @@
 import java.util.ArrayList;
 
-public class NumberMagic{
-
-  public NumberMagic(){
-
-  }
+public class NumberMagic{  
   
-  
-  public class PrimeNumber{
+  /**
+   * A class for prime number that will be used in prime facterization
+   * @author kochi
+   *
+   */
+  public static class PrimeNumber{
 	  int prime;
 	  int count;
 	  
+	  /**
+	   * Constructor 1 for prime number intializes the count with 0;
+	   * @param _prime the prime number
+	   */
 	  public PrimeNumber(int _prime) {
 		  prime = _prime;
 		  count = 1;
 	  }
 	  
+	  /**
+	   * Constructor 2 for prime number initializes the count with the input
+	   * @param _prime the prime number
+	   * @param _count the count for prime faterization
+	   */
 	  public PrimeNumber(int _prime, int _count) {
 		  prime = _prime;
 		  count = _count;
 	  }
 	  
+	  /**
+	   * increment a count by 1
+	   */
 	  public void increment() {
 		  count++;
 	  }
+	  
 	  
 	  public int getPrime() {
 		  return prime;
@@ -33,6 +46,12 @@ public class NumberMagic{
 		  return count;
 	  }
 	  
+	  /**
+	   * Equals method for prime number, this only considers the number itself not the count.
+	   * @param o the other object
+	   * @return true if its same number, false if not
+	   */
+	  @Override
 	  public boolean equals(Object o) {
 		  if(o instanceof PrimeNumber) {
 			  PrimeNumber prime = (PrimeNumber) o;
@@ -44,11 +63,20 @@ public class NumberMagic{
 		  return false;
 	  }
 	  
+	  /**
+	   * This multiplies the prime numbers and the count to get the total multiple of this number.
+	   * @return the total multiple.
+	   */
 	  public int multiply() {
 		  return (int) Math.pow(prime, count);
 	  }
   }
   
+  /**
+   * Prime Facterization 
+   * @param x the x value to do the prime facterization
+   * @return The arrayList that has all the prime numbers with count.
+   */
   public ArrayList<PrimeNumber> primeFacterization(int x){
 	  int modx = x;
 	  ArrayList<PrimeNumber> primeFact = new ArrayList<PrimeNumber>();
@@ -73,7 +101,16 @@ public class NumberMagic{
 	  return primeFact;
   }
   
-  public int lcm(ArrayList<PrimeNumber> x1_primes, ArrayList<PrimeNumber> x2_primes) {
+  
+  /**
+   * The least common multiple for two numbers
+   * @param x1_primes the prime facterization arraylist for the x1 prime
+   * @param x2_primes the prime facterization arraylist for the x2 prime
+   * @return the least common multiple of the two numbers.
+   */
+  public int lcm(int x1, int x2) {
+	  ArrayList<PrimeNumber> x1_primes = primeFacterization(x1);
+	  ArrayList<PrimeNumber> x2_primes = primeFacterization(x2);
 	  ArrayList<PrimeNumber> lcmprimes = new ArrayList<PrimeNumber>();
 	  Object[] x1_primes_array = x1_primes.toArray();
 	  Object[] x2_primes_array = x2_primes.toArray();
@@ -106,10 +143,22 @@ public class NumberMagic{
 	  return lcm;
   }
   
+  /**
+   * Get the lamda of two values. lamda = lcm(prime1 -1, prime2 - 1)
+   * @param prime1 the first prime number
+   * @param prime2 the second prime number
+   * @return the lamda value.
+   */
   public int lambda(int prime1, int prime2) {
-	  return lcm(primeFacterization(prime1 - 1), primeFacterization(prime2 -1));
+	  return lcm(prime1 - 1, prime2 - 1);
   }
   
+  /**
+   * Checks if two input values are relatively prime
+   * @param num1 the first number
+   * @param num2 the second number
+   * @return true if it is relatively prime, false if not.
+   */
   public boolean relativelyPrime(int num1, int num2) {
 	  ArrayList<PrimeNumber> prime1 = primeFacterization(num1);
 	  ArrayList<PrimeNumber> prime2 = primeFacterization(num2);
@@ -124,37 +173,35 @@ public class NumberMagic{
 	  return true;
   }
   
+  /**
+   * Finds the E values where 1 < e < lamdaValue
+   * @param lamdaValue the biggest value;
+   * @return the ArrayList of E.
+   */
   public ArrayList<Integer> findE(int lamdaValue) {
 	  ArrayList<Integer> eValues = new ArrayList<Integer>();
-	  ArrayList<PrimeNumber> lamdaPrimes = primeFacterization(lamdaValue); 
 	  for(int i = lamdaValue; i > 1; i--) {
-		  for(PrimeNumber prime : lamdaPrimes) {
-			  if(i % prime.getPrime() == 0) {
-				  break;
-			  }
+		  if(relativelyPrime(lamdaValue, i)) {
 			  eValues.add(i);
-
 		  }
 	  }
 	  return eValues;
   }
 
-  
+  /**
+   * Testing with main method
+   * @param args args
+   */
   public static void main(String[] args) {
 	  int e1 = 239;
 	  int e2 = 349;
 	  NumberMagic e = new NumberMagic();
-//	  ArrayList<PrimeNumber> e1primes = e.primeFacterization(e1 - 1);
-//	  ArrayList<PrimeNumber> e2primes = e.primeFacterization(e2 - 1);
-//	  int lamdaValue = e.lcm(e1primes , e2primes);
 	  int lamdaValue = e.lambda(e1, e2);
 	  System.out.println(lamdaValue);
 	  System.out.println("x1 prime: " + e1 + " x2 prime: " + e2 + " lamda is " + lamdaValue);
 	  ArrayList<Integer> eValues = e.findE(lamdaValue);
-//	  for(int i = 0; i < eValues.size(); i++) {
-//		  System.out.println("e" + i + ": " + eValues.get(i));
-//	  }
-//	  int lcm = e.lcm(e.primeFacterization(e1), e.primeFacterization(e2));
-//	  System.out.println(lcm);
+	  for(int i = 0; i < eValues.size(); i++) {
+		  System.out.println("e" + i + ": " + eValues.get(i));
+	  }
   }
 }
