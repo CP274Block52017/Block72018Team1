@@ -28,6 +28,11 @@ public class Block {
 		return hash;
 	}
 
+	/**
+	 * verifies if the block with the generated hash passes proof of work 
+	 * @param zeroCount
+	 * @return true if the hash passes proof of work
+	 */
 	public boolean passesProofOfWork(int zeroCount) {
 		generateHash();
 		for(int i = 0; i < zeroCount; i++) {
