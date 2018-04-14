@@ -28,6 +28,17 @@ public class Block {
 		return hash;
 	}
 
+	public boolean passesProofOfWork(int zeroCount) {
+		generateHash();
+		for(int i = 0; i < zeroCount; i++) {
+			if(hash.charAt(i) != '0') {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * getter for the data stored in this block
 	 * @return the data stored in this block

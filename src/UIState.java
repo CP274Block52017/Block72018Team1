@@ -1,5 +1,3 @@
-import javax.swing.JFrame;
-
 public interface UIState {
-	public void addComponents(JFrame frame);
+	public void addComponents(UIFrame frame);
 }
