@@ -73,6 +73,45 @@ public class NumberMagic{
   }
   
   /**
+   * Generates the prime numbers
+   * @param maxidx the number of prime numbers that you want.
+   * @return The arrayList of prime numbers.
+   */
+	public ArrayList<Integer> primeNumberGen(int maxidx) {
+		
+		ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
+		int idx = 0;
+		int value = 2;
+		while(idx < maxidx) {
+			if(isPrimeNumber(value)) {
+				primeNumbers.set(idx, value);
+				idx++;
+			}
+			value++;
+		}
+		return primeNumbers;
+	}
+	
+	/**
+	 * Checks if the number is prime or not
+	 * @param value the number to be checked
+	 * @return true if it is prime number, false if not.
+	 */
+	public boolean isPrimeNumber(int value) {
+		int checker = 3;
+		if(value != 2 && value % 2 == 0) {
+			return false;
+		}
+		while(checker < value) {
+			if(value % checker == 0) {
+				return false;
+			}
+			checker += 2;
+		}
+		return true;
+	}
+  
+  /**
    * Prime Facterization 
    * @param x the x value to do the prime facterization
    * @return The arrayList that has all the prime numbers with count.

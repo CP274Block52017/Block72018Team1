@@ -1,5 +1,5 @@
 
-public class Hash {
+public class CrappyHash {
 	
 	private int[] prime_numbers = new int[1000];
 
@@ -18,11 +18,6 @@ public class Hash {
 		}
 	}
 	
-	public int primeNumberGen(int index) {
-		
-		return 1;
-	}
-	
 	public boolean isPrimeNumber(int value) {
 		if(value != 2 && value % 2 == 0) {
 			return false;
@@ -34,6 +29,13 @@ public class Hash {
 		}
 		return true;
 	}
+	
+	public int primeNumberGen(int index) {
+		
+		return 1;
+	}
+	
+
 	
 	public static long SpamHashAlgorithm(int input) {
 		long output = 0;
@@ -60,7 +62,7 @@ public class Hash {
 	
 	
 	public static void main(String[] args) {
-		Hash h = new Hash();
+		CrappyHash h = new CrappyHash();
 		h.primeNumberGen();
 		for(int i = 0; i < h.prime_numbers.length; i++) {
 			System.out.println(h.prime_numbers[i]);
