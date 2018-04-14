@@ -44,10 +44,13 @@ public class BlockChain {
 		}
 		
 		addBlock(block);
-		
-		if(!isValid()) {
-			removeHead();
+		if(!block.testing)
+		{
+			if(!isValid()) {
+				removeHead();
+			}
 		}
+		
 		
 		return true;
 	}
