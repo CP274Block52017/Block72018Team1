@@ -1,5 +1,6 @@
 /**
  * Class with static method to generate random user IDs
+ * @author Jia
  */
 
 import java.util.Random;
