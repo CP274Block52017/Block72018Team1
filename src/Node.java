@@ -75,6 +75,14 @@ public class Node implements Runnable {
 	}
 	
 	/**
+	 * a getter method for this node's data
+	 * @return the data
+	 */
+	public String getData() {
+		return data;
+	}
+	
+	/**
 	 * stores new data in this node
 	 * @param datum
 	 */
