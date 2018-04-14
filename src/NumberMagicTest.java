@@ -38,7 +38,22 @@ public class NumberMagicTest {
 		int p1 = 41;
 		int p2 = 79;
 		
-		assertEquals(1560, number.lambda(41, 79));
+		assertEquals(1560, number.lambda(p1, p2));
+		
+	}
+
+
+	
+	@Test
+	public void findETest() {
+		NumberMagic number = new NumberMagic();
+		ArrayList<Integer> enumbers = number.findE(88);
+		
+		assertTrue(enumbers.contains(5));
+		assertTrue(enumbers.contains(87));
+		assertFalse(enumbers.contains(2));
+
+
 		
 	}
 	
