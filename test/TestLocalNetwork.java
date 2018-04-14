@@ -54,7 +54,7 @@ public class TestLocalNetwork {
 		testNetwork.broadcastNewTransaction(transactionInfo);
 		nodes = testNetwork.getNodes();
 		assertEquals(transactionInfo,nodes.get(0).getData().substring(1,transactionInfo.length()+1));
-		assertEquals(transactionInfo,nodes.get(1).getData().substring(1,transactionInfo.length()+1));
+		assertEquals(transactionInfo,nodes.get(1).getData().substring(1,transactionInfo.length()+1));  
 	}
 
 }
