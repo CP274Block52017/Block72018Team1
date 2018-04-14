@@ -52,8 +52,6 @@ public class NumberMagicTest {
 		assertTrue(enumbers.contains(5));
 		assertTrue(enumbers.contains(87));
 		assertFalse(enumbers.contains(2));
-
-
 		
 	}
 	
@@ -64,5 +62,20 @@ public class NumberMagicTest {
 
 		assertTrue(number.relativelyPrime(239, 429));
 		assertFalse(number.relativelyPrime(143, 242));
+	}
+	
+	
+	@Test
+	public void isPrimeTest() {
+		NumberMagic number = new NumberMagic();
+		assertTrue(number.isPrimeNumber(2521));
+		assertFalse(number.isPrimeNumber(69));
+	}
+	
+	@Test
+	public void multiplyTest() {
+		NumberMagic.PrimeNumber prime = new NumberMagic.PrimeNumber(7, 3);
+		
+		assertEquals(343, prime.multiply());
 	}
 }
