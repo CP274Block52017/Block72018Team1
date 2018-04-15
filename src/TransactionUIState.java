@@ -1,5 +1,5 @@
 
-public class TransactionUIState implements UIState {
+public class TransactionUIState extends ExistingUserUIState {
 
 	@Override
 	public void addComponents(UIFrame frame) {

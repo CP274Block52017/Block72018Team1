@@ -1,5 +1,5 @@
 
-public class OverViewUIState implements UIState {
+public class OverViewUIState extends ExistingUserUIState {
 
 	@Override
 	public void addComponents(UIFrame frame) {

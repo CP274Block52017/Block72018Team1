@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class MiningUIState implements UIState{
+public class MiningUIState extends ExistingUserUIState{
 	
 
 	@Override
