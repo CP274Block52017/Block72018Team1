@@ -10,7 +10,8 @@ public class MiningUIState extends ExistingUserUIState{
 	@Override
 	public void addComponents(UIFrame frame) {
 		frame.setLayout(new GridLayout(0, 2));
-		
+		addMenuBar(frame);
+
 		JLabel infoLabel = new JLabel("Mine Spam Coin!");
 		infoLabel.setFont(frame.getStandardizedFont(24));
 		frame.add(infoLabel);
