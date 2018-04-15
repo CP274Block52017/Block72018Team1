@@ -22,7 +22,7 @@ public class MiningGUI extends UIFrame{
 	}	
 	
 	public void initializeMarketInfo(JPanel panel) {
-		panel.setSize(300,800);
+		panel.setSize(800,800);
 		
 	}
 	
@@ -35,9 +35,9 @@ public class MiningGUI extends UIFrame{
 			}
 		};
 		
-		mine = new JButton("MINE");
-				mine.addActionListener(mining);
-		
+		Icon icon = new ImageIcon("Spam_can.png");
+		mine = new JButton(icon);
+		mine.addActionListener(mining);
 		panel.add(mine);
 	}
 	

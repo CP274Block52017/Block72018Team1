@@ -29,9 +29,7 @@ public class MiningUIState implements UIState{
 					frame.initializeLocalNode(localNode);
 			}
 		});
-				
 		frame.add(mine);
-		
 	}
 
 }
