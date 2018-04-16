@@ -249,7 +249,6 @@ public class NumberMagic{
 	  
 	  int[] keyPair = {publicKey, privateKey, n_value};
 	  return keyPair
-	  
   }
   
   /**
