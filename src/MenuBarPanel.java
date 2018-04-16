@@ -9,6 +9,8 @@ public class MenuBarPanel extends JPanel{
 	private JButton transactionButton;
 	private JButton miningButton;
 	private JButton settingsButton;
+	private JButton remainingSCButton;
+	private int amount;
 	private UIFrame frame;
 	
 	public MenuBarPanel(UIFrame _frame) {
@@ -16,6 +18,8 @@ public class MenuBarPanel extends JPanel{
 		transactionButton = new JButton("Transaction");
 		miningButton = new JButton("Mining");
 		settingsButton = new JButton("Settings");
+		amount = 0;
+		remainingSCButton = new JButton(amount + " SpamCoin");
 		frame = _frame;
 		this.initializePanel();
 		this.addFunctions();

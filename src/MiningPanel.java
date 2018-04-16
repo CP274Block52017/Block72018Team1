@@ -1,3 +1,4 @@
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,7 +24,7 @@ public class MiningPanel extends JPanel {
 		description = new JLabel("MINE SPAM COIN");
 		mining_panel = new JPanel();
 		stats_panel = new JPanel();
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		this.setLayout(new GridBagLayout());
 		initializeMiningPage(mining_panel);
 		mining_panel.add(description);
 		this.add(mining_panel);
