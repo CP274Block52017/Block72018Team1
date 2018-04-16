@@ -27,7 +27,11 @@ public class KeyUIState implements UIState {
 		startButton.addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						frame.setState(new MiningUIState());
+						Node localNode = new Node(keyPair[0], keyPair[1]);
+						localNode.addToNetwork(Runner.GLOBAL_NETWORK);
+						localNode.startWork();
+						frame.initializeLocalNode(localNode);
+						frame.setState(new NewUserUIState());
 					}
 				});
 		frame.add(startButton);

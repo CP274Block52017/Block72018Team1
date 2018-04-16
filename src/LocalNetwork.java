@@ -27,4 +27,8 @@ public class LocalNetwork implements Network {
 			node.processNewBlock(block);
 		}
 	}
+	
+	public ArrayList<Node> getNodes(){
+		return nodes;
+	}
 }

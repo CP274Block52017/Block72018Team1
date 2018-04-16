@@ -5,6 +5,8 @@ public class Block {
 	private String hash;
 	private String previousHash;
 	
+	public static boolean testing=false;
+	
 	private long timestamp;
 	
 	private long nonce;
@@ -29,13 +31,13 @@ public class Block {
 	}
 
 	public boolean passesProofOfWork(int zeroCount) {
-		generateHash();
+		if(!testing)
+			generateHash();
 		for(int i = 0; i < zeroCount; i++) {
 			if(hash.charAt(i) != '0') {
 				return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -53,6 +55,20 @@ public class Block {
 	 */
 	public String getPreviousHash() {
 		return previousHash;
+	}
+	
+	public String getHash()
+	{
+		return hash;
+	}
+	
+	/**
+	 * setter method for testing the validity of the passesProofOfWork()
+	 * @param hash
+	 */
+	public void setHash(String hash)
+	{
+		this.hash = hash;
 	}
 	
 	/**

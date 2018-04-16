@@ -1,5 +1,9 @@
 /**
  * Class with static method to generate random user IDs
+<<<<<<< HEAD
+=======
+ * @author Jia
+>>>>>>> refs/remotes/origin/master
  */
 
 import java.util.Random;

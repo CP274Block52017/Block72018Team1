@@ -1,3 +1,9 @@
+
+/**
+ * UI for displaying randomly generated user ID
+ * @author Jia
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
