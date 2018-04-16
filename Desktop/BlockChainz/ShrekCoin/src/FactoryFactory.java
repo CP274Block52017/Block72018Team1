@@ -1,8 +1,7 @@
 
 public class FactoryFactory {
 	public static enum FactoryType {
-		NormalFactory,
-		FactoryFactory
+		FactoryFactory,
 	};
 	
 	public static FactoryFactory factoryFactoryFactory() {
