@@ -9,7 +9,7 @@ public class FactoryFactory {
 		case FactoryFactory:
 			return new FactoryFactory();
 		default:
-			return null;
+			return null; // ?
 		}
 	}
 }
