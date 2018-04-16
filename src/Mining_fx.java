@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -14,9 +15,10 @@ public class Mining_fx extends PaneState{
 	
 	@Override
 	public void addComponents() {
-		
+		HBox hbox = new HBox();
 		Label label = new Label("Mine the spam coin");
 		Button mine = new Button("MINE");
+		
 		this.getChildren().add(label);
 		this.getChildren().add(mine);	
 	}
