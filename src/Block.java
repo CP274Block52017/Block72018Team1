@@ -4,13 +4,10 @@ public class Block {
 	private String data;
 	private String hash;
 	private String previousHash;
-	
-	public static boolean testing=false;
-	
+	public static boolean testing = false;
+
 	private long timestamp;
-	
 	private long nonce;
-	
 	public Block(String data, String previousHash) {
 		this.data = data;
 		this.hash = generateHash();
