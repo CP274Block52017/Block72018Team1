@@ -5,6 +5,7 @@ public class Block {
 	private String hash;
 	private String previousHash;
 	public static boolean testing = false;
+
 	private long timestamp;
 	private long nonce;
 	public Block(String data, String previousHash) {
