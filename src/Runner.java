@@ -6,7 +6,6 @@ public class Runner {
 			int[] keyPair = new KeyPairGenerator().generateNext();
 			Node node = new Node(keyPair[0], keyPair[1]);
 			node.addToNetwork(Runner.GLOBAL_NETWORK);
-			// node.startWork();
 		}
 		
 		new UIFrame();
