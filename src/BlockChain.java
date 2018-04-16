@@ -30,14 +30,26 @@ public class BlockChain {
 		return true;
 	}
 	
+	/**
+	 * This method returns the length of the block chain
+	 * @return length of block chain
+	 */
 	public int length() {
 		return chain.size();
 	}
 	
+	/**
+	 * This method adds one block to the ArrayList chain
+	 * @param block
+	 */
 	private void addBlock(Block block) {
 		chain.add(block);
 	}
 	
+	/**
+	 * This method processes a block by checking if it passes proof of work and is also valid.
+	 * @return true if the block passes proof of work and is valid
+	 */
 	public boolean processNewBlock(Block block) {
 		if(!block.passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros())) {
 			return false;
@@ -55,10 +67,17 @@ public class BlockChain {
 		return true;
 	}
 	
+	/**
+	 * This method returns the last block of the block chain
+	 * @return last block
+	 */
 	public Block getHead() {
 		return chain.get(chain.size() - 1);
 	}
 	
+	/**
+	 * This method removes the last block of the block chain when it is invalid
+	 */
 	public void removeHead() {
 		chain.remove(chain.size() - 1);
 	}

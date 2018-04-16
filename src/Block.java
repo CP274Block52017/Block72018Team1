@@ -30,6 +30,11 @@ public class Block {
 		return hash;
 	}
 
+	/**
+	 * verifies if a block passes proof of work by counting digits of 0's
+	 * @param zeroCount
+	 * @return true if the block is verified to pass the proof of work
+	 */
 	public boolean passesProofOfWork(int zeroCount) {
 		if(!testing)
 			generateHash();
