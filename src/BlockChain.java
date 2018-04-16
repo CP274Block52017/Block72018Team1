@@ -33,7 +33,7 @@ public class BlockChain {
 	
 	/**
 	 * This method returns the length of the block chain
-	 * @return length of block chain
+	 * @return the number of blocks in this chain
 	 */
 	public int length() {
 		return chain.size();
@@ -43,13 +43,14 @@ public class BlockChain {
 	 * This method adds one block to the ArrayList chain
 	 * @param block
 	 */
-	private void addBlock(Block block) {
+	public void addBlock(Block block) {
 		chain.add(block);
 	}
 	
 	/**
-	 * This method processes a block by checking if it passes proof of work and is also valid.
-	 * @return true if the block passes proof of work and is valid
+	 * processe a block and adds it to the chain and returns true if it is valid, otherwise returns false
+	 * @param block
+	 * @return whether the block is valid
 	 */
 	public boolean processNewBlock(Block block) {
 		if(!block.passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros())) {
@@ -77,7 +78,23 @@ public class BlockChain {
 	}
 	
 	/**
-	 * This method removes the last block of the block chain when it is invalid
+	 * gets every transaction from every block in this chain
+	 * @return
+	 */
+	public ArrayList<Transaction> getAllTransactions() {
+		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+		
+		for(Block block : chain) {
+			for(Transaction transaction : block.getTransactions()) {
+				transactions.add(transaction);
+			}
+		}
+			
+		return transactions;
+	}
+	
+	/**
+	 * removes the head block of this chain
 	 */
 	public void removeHead() {
 		chain.remove(chain.size() - 1);
