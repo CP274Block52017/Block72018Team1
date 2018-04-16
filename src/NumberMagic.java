@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.*;
+import java.math.*;
 
 public class NumberMagic{  
   
+	public static final int PRIME_SIZE = 100;
+
   /**
    * A class for prime number that will be used in prime facterization
    * @author kochi
    *
    */
   public static class PrimeNumber{
-	  int prime;
-	  int count;
+	  private int prime;
+	  private int count;
 	  
 	  /**
 	   * Constructor 1 for prime number intializes the count with 0;
@@ -82,9 +86,9 @@ public class NumberMagic{
 		ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
 		int idx = 0;
 		int value = 2;
-		while(idx < maxidx) {
+		while(idx < maxidx - 1) {
 			if(isPrimeNumber(value)) {
-				primeNumbers.set(idx, value);
+				primeNumbers.add(value);
 				idx++;
 			}
 			value++;
@@ -233,22 +237,23 @@ public class NumberMagic{
    */
   public int[] generateKeyPair() {
 	  
-	  ArrayList<Integer> primes = primeNumberGen(100);
+	  ArrayList<Integer> primes = primeNumberGen(PRIME_SIZE);
 	  Random random = new Random();
-	  int p_value = primes.get(random.nextInt(100));
-	  int q_value = primes.get(random.nextInt(100));
+	  int p_value = primes.get(random.nextInt(PRIME_SIZE - 1));
+	  int q_value = primes.get(random.nextInt(PRIME_SIZE - 1));
 	  int n_value = p_value * q_value;
-	  int lamdaValue = lamda(p_value, q_value);
+	  int lamdaValue = lambda(p_value, q_value);
+	  
 	  ArrayList<Integer> e_numbers = findE(lamdaValue);
 	  int publicKey = e_numbers.get(random.nextInt(e_numbers.size() - 1));
 	  int count = 1;
-	  while(((count * publicKey) - 1) % lamdaValue != 0) {
-		  count++;
-	  }
-	  int privateKey = count + lamdaValue * random.nextInt(lamdaValue);
 	  
+	  while(((count * publicKey) - 1) % lamdaValue != 0) {
+			  count++;
+		  }
+	  int privateKey = count + lamdaValue * random.nextInt(lamdaValue);
 	  int[] keyPair = {publicKey, privateKey, n_value};
-	  return keyPair
+	  return keyPair;
   }
   
   /**
