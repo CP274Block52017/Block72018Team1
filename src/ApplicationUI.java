@@ -7,22 +7,28 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ApplicationUI extends Application{
 	
-	Button dashboard_btn;
-	Button transactions_btn;
-	Button mining_btn;
-	Button setting_btn;
-	Label balance;
-	UIScene curr_scene;
-	BorderPane border;
-	StackPane root;
+	private Button dashboard_btn;
+	private Button transactions_btn;
+	private Button mining_btn;
+	private Button setting_btn;
+	private double amount;
+	private Label balance;
+	private UIScene curr_scene;
+	private BorderPane border;
+	private StackPane root;
+	private Node localNode;
 	
 	
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 800;
+	
+	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
+
 	
 
 	@Override
@@ -31,7 +37,7 @@ public class ApplicationUI extends Application{
 		root = new StackPane();
 		curr_scene = new UIScene(border, WIDTH, HEIGHT);
 		
-		int amount = 100;
+		amount = 100;
 		balance = new Label(amount + "Spam Coin");
 		dashboard_btn = new Button("Dashboard");
 		transactions_btn = new Button("Transactions");
@@ -46,9 +52,10 @@ public class ApplicationUI extends Application{
 				balance
 				);
 		
-		initializeButtons(curr_scene, primaryStage);
+		initializeButtons(this);
 		root.getChildren().add(toolbar);
 		border.setTop(root);
+		border.setCenter(new InitialPage_fx());
 		primaryStage.setTitle("Spam Coin Wallet");
 		primaryStage.setResizable(true);
 		primaryStage.setScene(curr_scene);
@@ -57,7 +64,26 @@ public class ApplicationUI extends Application{
 		
 	}
 	
-	public void initializeButtons(UIScene curr_scene, Stage stage) {
+	public void updateBalance(double newAmount) {
+		amount = newAmount;
+	}
+	
+	public void initializeLocalNode(Node node) {
+		if(localNode == null) {
+			localNode = node;
+		}
+	}
+	
+	public Node getLocalNode() {
+		return localNode;
+	}
+	
+	/**
+	 * Sets the tool bar buttons with functions
+	 * @param curr_scene chages the 
+	 * @param stage
+	 */
+	public void initializeButtons(ApplicationUI frame) {
 		dashboard_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -68,7 +94,7 @@ public class ApplicationUI extends Application{
 		transactions_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				border.setCenter(new Transaction_fx());
+				border.setCenter(new Transaction_fx(frame));
 			}
 		});
 		

@@ -8,6 +8,7 @@ public class TransactionUIState extends ExistingUserUIState {
 	public void addComponents(UIFrame frame) {
 		addMenuBar(frame);
 
+		
 		// TODO Auto-generated method stub
 
 	}

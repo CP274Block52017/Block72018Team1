@@ -1,5 +1,6 @@
+import javafx.scene.layout.BorderPane;
 
-public class Setting_fx extends PaneState {
+public class Setting_fx extends BorderPane implements PaneState {
 
 	@Override
 	public void addComponents() {
