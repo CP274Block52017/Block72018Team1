@@ -78,4 +78,9 @@ public class NumberMagicTest {
 		
 		assertEquals(343, prime.multiply());
 	}
+	
+	@Test
+	public void keysTest() {
+		
+	}
 }
