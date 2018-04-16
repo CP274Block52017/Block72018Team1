@@ -8,11 +8,11 @@ public class UIFrame extends JFrame {
 		super("SpamCoin");
 		
 		setPreferredSize(new Dimension(600, 400));
-		this.add(new MenuBarPanel(this));
 		pack();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+		
 		setState(new NewUserUIState());
 	}
 	

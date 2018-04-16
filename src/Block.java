@@ -4,11 +4,9 @@ public class Block {
 	private String data;
 	private String hash;
 	private String previousHash;
-	
+	public static boolean testing = false;
 	private long timestamp;
-	
 	private long nonce;
-	
 	public Block(String data, String previousHash) {
 		this.data = data;
 		this.hash = generateHash();
@@ -28,14 +26,19 @@ public class Block {
 		return hash;
 	}
 
+	/**
+	 * verifies if a block passes proof of work by counting digits of 0's
+	 * @param zeroCount
+	 * @return true if the block is verified to pass the proof of work
+	 */
 	public boolean passesProofOfWork(int zeroCount) {
-		generateHash();
+		if(!testing)
+			generateHash();
 		for(int i = 0; i < zeroCount; i++) {
 			if(hash.charAt(i) != '0') {
 				return false;
 			}
 		}
-		
 		return true;
 	}
 	
@@ -53,6 +56,20 @@ public class Block {
 	 */
 	public String getPreviousHash() {
 		return previousHash;
+	}
+	
+	public String getHash()
+	{
+		return hash;
+	}
+	
+	/**
+	 * setter method for testing the validity of the passesProofOfWork()
+	 * @param hash
+	 */
+	public void setHash(String hash)
+	{
+		this.hash = hash;
 	}
 	
 	/**
