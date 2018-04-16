@@ -11,11 +11,13 @@ public class TransactionUIState implements UIState {
 	private JButton sendButton;
 	private JLabel balanceLabel;
 	private JButton backButton;
+	private JButton historyButton;
 	
 	public TransactionUIState() {
 		sendButton = new JButton("Send");
 		balanceLabel = new JLabel("", SwingConstants.CENTER);
 		backButton = new JButton("Back to mining");
+		historyButton = new JButton("View transaction history");
 	}
 	
 	public void updateBalance(double balance) {
@@ -23,7 +25,7 @@ public class TransactionUIState implements UIState {
 	}
 	
 	public void addComponents(UIFrame frame) {
-		frame.setLayout(new GridLayout(4, 0));
+		frame.setLayout(new GridLayout(5, 0));
 		
 		balanceLabel.setFont(frame.getStandardizedFont(48));
 		frame.add(balanceLabel);
@@ -76,5 +78,14 @@ public class TransactionUIState implements UIState {
 					}
 				});
 		frame.add(backButton);
+
+		historyButton.setFont(frame.getStandardizedFont(32));
+		historyButton.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						frame.setState(new HistoryUIState());
+					}
+				});
+		frame.add(historyButton);
 	}
 }

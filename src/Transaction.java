@@ -31,6 +31,9 @@ public class Transaction {
 	 * explains what this transaction is with a String
 	 */
 	public String toString() {
+		if(senderKey == Block.GENERATOR_KEY) {
+			return recieverKey + " recieved " + amount + " from mining rewards";
+		}
 		return "Sender " + senderKey + " sent " + amount + " to " + recieverKey;
 	}
 }
