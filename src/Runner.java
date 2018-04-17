@@ -7,6 +7,8 @@ public class Runner {
 			new Node(i, i).addToNetwork(Runner.GLOBAL_NETWORK);
 		}
 		
+		Database.createDBAndUse();
 		new UIFrame();
+		
 	}
 }
