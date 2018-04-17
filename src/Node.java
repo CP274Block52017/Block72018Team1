@@ -56,6 +56,10 @@ public class Node {
 		return secretKey;
 	}
 	
+	public BlockChain getLocalChain() {
+		return localChain;
+	}
+	
 	public double getBalance() {
 		double balance = 0.0;
 		ArrayList<Transaction> transactions = localChain.getAllTransactions();

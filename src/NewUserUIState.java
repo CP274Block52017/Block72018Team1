@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * a UIState that new users go through to get started with identification info
+ * @author Case Regan
+ *
+ */
 public class NewUserUIState implements UIState {
 	private JButton joinButton;
 	

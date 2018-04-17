@@ -54,14 +54,26 @@ public class BlockChain {
 		return true;
 	}
 	
+	/**
+	 * @return the number of blocks in this chain
+	 */
 	public int length() {
 		return chain.size();
 	}
 	
-	private void addBlock(Block block) {
+	/**
+	 * adds a block to this chain
+	 * @param block
+	 */
+	public void addBlock(Block block) {
 		chain.add(block);
 	}
 	
+	/**
+	 * processe a block and adds it to the chain and returns true if it is valid, otherwise returns false
+	 * @param block
+	 * @return whether the block is valid
+	 */
 	public boolean processNewBlock(Block block) {
 		if(!block.passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros())) {
 			return false;
@@ -77,10 +89,18 @@ public class BlockChain {
 		return true;
 	}
 	
+	/**
+	 * returns the head of this chain
+	 * @return
+	 */
 	public Block getHead() {
 		return chain.get(chain.size() - 1);
 	}
 	
+	/**
+	 * gets every transaction from every block in this chain
+	 * @return
+	 */
 	public ArrayList<Transaction> getAllTransactions() {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		
@@ -93,6 +113,9 @@ public class BlockChain {
 		return transactions;
 	}
 	
+	/**
+	 * removes the head block of this chain
+	 */
 	public void removeHead() {
 		chain.remove(chain.size() - 1);
 	}
