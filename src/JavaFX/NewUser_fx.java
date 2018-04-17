@@ -16,12 +16,18 @@ public class NewUser_fx extends BorderPane implements PaneState {
 	private ApplicationUI frame;
 	private Label id;
 	private VBox vbox;
+	private final static int WIDTH = 130;
+	private final static int HEIGHT = 40;
 	
 	public NewUser_fx(ApplicationUI _frame) {
 		frame = _frame;
 		start = new Button("START");
-		label = new Label("Your ID has been generated:");
-		id = new Label(IDGenerator.generateRandomID());
+		start.setFont(new Font("Aspergit", 20));
+		start.setPrefSize(WIDTH, HEIGHT);
+		label = new Label("Your Public Key has been generated:");
+		label.setFont(new Font("Aspergit", 50));
+		id = new Label(((Integer)frame.getLocalNode().getPublicKey()).toString());
+		id.setFont(new Font("Aspergit", 50));
 		vbox = new VBox();
 		addComponents();
 		initializeButtons();
@@ -43,10 +49,6 @@ public class NewUser_fx extends BorderPane implements PaneState {
 			@Override
 			public void handle(ActionEvent event) {
 				vbox.getChildren().clear();
-				int[] keyPair = new KeyPairGenerator().generateNext();
-				Node localNode = new Node(keyPair[0], keyPair[1]);
-				localNode.addToNetwork(ApplicationUI.GLOBAL_NETWORK);
-				frame.initializeLocalNode(localNode);
 				frame.setDashboardTemplate();
 				
 			}

@@ -18,6 +18,7 @@ public class ApplicationUI extends Application{
 	private Button setting_btn;
 	private double amount;
 	private Label balance;
+	private Label publicKey;
 	private Scene curr_scene;
 	private BorderPane border;
 	private StackPane root;
@@ -27,8 +28,8 @@ public class ApplicationUI extends Application{
 	public static LocalNetwork GLOBAL_NETWORK = new LocalNetwork();
 	
 	
-	public static final int WIDTH = 500;
-	public static final int HEIGHT = 500;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 700;
 	
 	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 
@@ -60,13 +61,17 @@ public class ApplicationUI extends Application{
 		transactions_btn = new Button("Transactions");
 		mining_btn = new Button("Mining");
 		setting_btn = new Button("Setting");
+		publicKey = new Label("Your Public Key: " + localNode.getPublicKey());
+		
 		ToolBar toolbar = new ToolBar(
 				dashboard_btn,
 				transactions_btn,
 				mining_btn,
 				setting_btn,
 				new Separator(),
-				balance
+				balance,
+				new Separator(),
+				publicKey
 				);
 		
 		initializeButtons(this);
@@ -119,7 +124,7 @@ public class ApplicationUI extends Application{
 		setting_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				border.setCenter(new Setting_fx());
+				border.setCenter(new Setting_fx(frame));
 			}
 		});
 	}	
