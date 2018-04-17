@@ -229,7 +229,7 @@ public class KeyPairGenerator {
 		Random random = new Random();
 		int p_value = primes.get(random.nextInt(PRIME_SIZE - 1));
 		int q_value = primes.get(random.nextInt(PRIME_SIZE - 1));
-		// int n_value = p_value * q_value;
+		 int n_value = p_value * q_value;
 		int lambdaValue = lambda(p_value, q_value);
 				
 		
@@ -243,7 +243,7 @@ public class KeyPairGenerator {
 		
 		int privateKey = count + lambdaValue * random.nextInt(lambdaValue);
 		
-		int[] keyPair = new int[]{publicKey, privateKey};
+		int[] keyPair = new int[]{publicKey, privateKey, n_value};
 		
 		keysGenerated++;
 		return keyPair;
