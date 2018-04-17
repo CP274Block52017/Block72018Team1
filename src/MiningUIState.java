@@ -8,7 +8,8 @@ public class MiningUIState implements UIState {
 	private JLabel balanceLabel;
 	
 	public MiningUIState() {
-		mineButton = new JButton("Mine");
+		Icon spamIcon = new ImageIcon("spam.png");
+		mineButton = new JButton(spamIcon);
 		transactionButton = new JButton("Make a transaction");
 		balanceLabel = new JLabel("", SwingConstants.CENTER);
 	}
@@ -23,7 +24,7 @@ public class MiningUIState implements UIState {
 		balanceLabel.setFont(frame.getStandardizedFont(48));
 		frame.add(balanceLabel);
 		updateBalance(frame.getLocalNode().getBalance());
-		
+
 		mineButton.setFont(frame.getStandardizedFont(32));
 		mineButton.addActionListener(
 				new ActionListener() {
