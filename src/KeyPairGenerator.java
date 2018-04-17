@@ -146,15 +146,6 @@ public class KeyPairGenerator {
 	public int lcm(int x1, int x2) {
 		ArrayList<PrimeNumber> x1_primes = primeFactorization(x1);
 		ArrayList<PrimeNumber> x2_primes = primeFactorization(x2);
-		
-		for(PrimeNumber p1 : x1_primes) {
-			System.out.println(x1 + ": " + p1.getPrime());
-		}
-		
-		for(PrimeNumber p2 : x2_primes) {
-			System.out.println(x2 + ": " + p2.getPrime());
-		}
-		
 		ArrayList<PrimeNumber> lcmprimes = new ArrayList<PrimeNumber>();
 		Object[] x1_primes_array = x1_primes.toArray();
 		Object[] x2_primes_array = x2_primes.toArray();
@@ -181,7 +172,6 @@ public class KeyPairGenerator {
 		for(PrimeNumber e: lcmprimes) {
 			lcm *= e.multiply();
 		}	
-		System.out.println("lcm: " + lcm);
 		return lcm;
 	}
 	
@@ -242,7 +232,6 @@ public class KeyPairGenerator {
 		// int n_value = p_value * q_value;
 		int lambdaValue = lambda(p_value, q_value);
 				
-		System.out.println(p_value + " " + q_value + " " + lambdaValue);
 		
 		ArrayList<Integer> e_numbers = findE(lambdaValue);
 		int publicKey = e_numbers.get(random.nextInt(e_numbers.size() - 1));
