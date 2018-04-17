@@ -11,7 +11,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ApplicationUI extends Application{
-	
+
+	public static LocalNetwork GLOBAL_NETWORK = new LocalNetwork();
+
 	private Button dashboard_btn;
 	private Button transactions_btn;
 	private Button mining_btn;
@@ -22,21 +24,21 @@ public class ApplicationUI extends Application{
 	private BorderPane border;
 	private StackPane root;
 	private Node localNode;
-	
-	
+
+
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 800;
-	
+
 	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 
-	
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		border = new BorderPane();
 		root = new StackPane();
 		curr_scene = new UIScene(border, WIDTH, HEIGHT);
-		
+
 		amount = 100;
 		balance = new Label(amount + " Spam Coin");
 		dashboard_btn = new Button("Dashboard");
@@ -51,36 +53,36 @@ public class ApplicationUI extends Application{
 				new Separator(),
 				balance
 				);
-		
+
 		initializeButtons(this);
 		root.getChildren().add(toolbar);
-
+		root.getChildren().add(new InitialPage_fx());
 		border.setTop(root);
 		primaryStage.setTitle("Spam Coin Wallet");
 		primaryStage.setResizable(true);
 		primaryStage.setScene(curr_scene);
 		primaryStage.show();
 
-		
+
 	}
-	
+
 	public void updateBalance(double newAmount) {
 		amount = newAmount;
 	}
-	
+
 	public void initializeLocalNode(Node node) {
 		if(localNode == null) {
 			localNode = node;
 		}
 	}
-	
+
 	public Node getLocalNode() {
 		return localNode;
 	}
-	
+
 	/**
 	 * Sets the tool bar buttons with functions
-	 * @param curr_scene chages the 
+	 * @param curr_scene chages the
 	 * @param stage
 	 */
 	public void initializeButtons(ApplicationUI frame) {
@@ -90,29 +92,29 @@ public class ApplicationUI extends Application{
 				border.setCenter(new Dashboard_fx());
 			}
 		});
-		
+
 		transactions_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				border.setCenter(new Transaction_fx(frame));
 			}
 		});
-		
+
 		mining_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				border.setCenter(new Mining_fx(frame));
 			}
 		});
-		
+
 		setting_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				border.setCenter(new Setting_fx());
 			}
 		});
-	}		
-	
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}

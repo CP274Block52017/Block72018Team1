@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class Transaction_fx extends BorderPane implements PaneState {
-	
+
 	private Button sendButton;
 	private Button contactButton;
 	private TextField amountField;
@@ -21,7 +21,7 @@ public class Transaction_fx extends BorderPane implements PaneState {
 	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 	private static final Font CONTENT_FONT = new Font("Aspergit", 24);
 	private ApplicationUI frame;
-	
+
 	public Transaction_fx(ApplicationUI _frame) {
 		frame = _frame;
 		title = new Label("Send a Transaction");
@@ -47,13 +47,13 @@ public class Transaction_fx extends BorderPane implements PaneState {
 		HBox receiver_box = new HBox();
 		vbox.getChildren().add(title);
 		vbox.getChildren().add(new Separator());
-		
+
 		amount_box.getChildren().add(amount);
 		amount_box.getChildren().add(amountField);
 		receiver_box.getChildren().add(to);
 		receiver_box.getChildren().add(receiverField);
 		receiver_box.getChildren().add(contactButton);
-		
+
 		vbox.getChildren().add(receiver_box);
 		vbox.getChildren().add(amount_box);
 		vbox.getChildren().add(sendButton);
@@ -62,24 +62,21 @@ public class Transaction_fx extends BorderPane implements PaneState {
 		this.setCenter(vbox);
 
 	}
-	
-	
+
+
 	public void initializeButtons() {
-		
+
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String amount = amountField.getText();
-				String receiver = receiverField.getText();
+				double amount = Double.parseDouble(amountField.getText());
+				int receiver = Integer.parseInt(receiverField.getText());
 				System.out.println("SENDING: " + amount + " SP to " + receiver);
-				
-				frame.getLocalNode().pushTransaction(new Transaction(frame.getLocalNode().getPublicKey(), Integer.parseInt(receiverField.getText()), Double.parseDouble(amountField.getText())));
-				frame.updateBalance(frame.getLocalNode().getBalance());
-				
+
 			}
 		});
-		
-		
+
+
 	}
 
 }
