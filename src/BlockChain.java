@@ -80,7 +80,7 @@ public class BlockChain {
 	 * @return whether the block is valid
 	 */
 	public boolean processNewBlock(Block block) {
-		if(!block.passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros())) {
+		if(!block.passesProofOfWork(ApplicationUI.GLOBAL_NETWORK.getRequiredZeros())) {
 			return false;
 		}
 		
