@@ -1,15 +1,19 @@
 import java.util.ArrayList;
+import java.util.*;
+import java.math.*;
 
-public class NumberMagic{  
-  
+public class NumberMagic{
+
+	public static final int PRIME_SIZE = 100;
+
   /**
    * A class for prime number that will be used in prime facterization
    * @author kochi
    *
    */
   public static class PrimeNumber{
-	  int prime;
-	  int count;
+	  private int prime;
+	  private int count;
 	  
 	  /**
 	   * Constructor 1 for prime number intializes the count with 0;
@@ -19,7 +23,7 @@ public class NumberMagic{
 		  prime = _prime;
 		  count = 1;
 	  }
-	  
+
 	  /**
 	   * Constructor 2 for prime number initializes the count with the input
 	   * @param _prime the prime number
@@ -29,23 +33,23 @@ public class NumberMagic{
 		  prime = _prime;
 		  count = _count;
 	  }
-	  
+
 	  /**
 	   * increment a count by 1
 	   */
 	  public void increment() {
 		  count++;
 	  }
-	  
-	  
+
+
 	  public int getPrime() {
 		  return prime;
 	  }
-	  
+
 	  public int getCount() {
 		  return count;
 	  }
-	  
+
 	  /**
 	   * Equals method for prime number, this only considers the number itself not the count.
 	   * @param o the other object
@@ -62,7 +66,7 @@ public class NumberMagic{
 		  }
 		  return false;
 	  }
-	  
+
 	  /**
 	   * This multiplies the prime numbers and the count to get the total multiple of this number.
 	   * @return the total multiple.
@@ -71,27 +75,27 @@ public class NumberMagic{
 		  return (int) Math.pow(prime, count);
 	  }
   }
-  
+
   /**
    * Generates the prime numbers
    * @param maxidx the number of prime numbers that you want.
    * @return The arrayList of prime numbers.
    */
 	public ArrayList<Integer> primeNumberGen(int maxidx) {
-		
+
 		ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
 		int idx = 0;
 		int value = 2;
-		while(idx < maxidx) {
+		while(idx < maxidx - 1) {
 			if(isPrimeNumber(value)) {
-				primeNumbers.set(idx, value);
+				primeNumbers.add(value);
 				idx++;
 			}
 			value++;
 		}
 		return primeNumbers;
 	}
-	
+
 	/**
 	 * Checks if the number is prime or not
 	 * @param value the number to be checked
@@ -110,9 +114,9 @@ public class NumberMagic{
 		}
 		return true;
 	}
-  
+
   /**
-   * Prime Facterization 
+   * Prime Facterization
    * @param x the x value to do the prime facterization
    * @return The arrayList that has all the prime numbers with count.
    */
@@ -139,8 +143,8 @@ public class NumberMagic{
 	  }
 	  return primeFact;
   }
-  
-  
+
+
   /**
    * The least common multiple for two numbers
    * @param x1_primes the prime facterization arraylist for the x1 prime
@@ -153,8 +157,8 @@ public class NumberMagic{
 	  ArrayList<PrimeNumber> lcmprimes = new ArrayList<PrimeNumber>();
 	  Object[] x1_primes_array = x1_primes.toArray();
 	  Object[] x2_primes_array = x2_primes.toArray();
-	  
-	  
+
+
 	  for(Object e1: x1_primes_array) {
 		  for(Object e2: x2_primes_array) {
 			  PrimeNumber p1 = (PrimeNumber) e1;
@@ -163,7 +167,7 @@ public class NumberMagic{
 
 				  if(p1.getCount() > p2.getCount()) {
 					  lcmprimes.add(new PrimeNumber(p1.getPrime(), p1.getCount()));
-					  
+
 				  }else {
 					  lcmprimes.add(new PrimeNumber(p2.getPrime(), p2.getCount()));
 
@@ -181,7 +185,7 @@ public class NumberMagic{
 	  }
 	  return lcm;
   }
-  
+
   /**
    * Get the lamda of two values. lamda = lcm(prime1 -1, prime2 - 1)
    * @param prime1 the first prime number
@@ -191,7 +195,7 @@ public class NumberMagic{
   public int lambda(int prime1, int prime2) {
 	  return lcm(prime1 - 1, prime2 - 1);
   }
-  
+
   /**
    * Checks if two input values are relatively prime
    * @param num1 the first number
@@ -201,7 +205,7 @@ public class NumberMagic{
   public boolean relativelyPrime(int num1, int num2) {
 	  ArrayList<PrimeNumber> prime1 = primeFacterization(num1);
 	  ArrayList<PrimeNumber> prime2 = primeFacterization(num2);
-	  
+
 	  for(int i = 0; i < prime1.size(); i++) {
 		  for(int j = 0; j < prime2.size(); j++) {
 			  if(prime1.get(i).equals(prime2.get(j))) {
@@ -211,7 +215,7 @@ public class NumberMagic{
 	  }
 	  return true;
   }
-  
+
   /**
    * Finds the E values where 1 < e < lamdaValue
    * @param lamdaValue the biggest value;
@@ -225,6 +229,52 @@ public class NumberMagic{
 		  }
 	  }
 	  return eValues;
+  }
+
+  /**
+   * it generates the key pair
+   * @return the pair of ints, public key, privatekey, and n_value.
+   */
+  public int[] generateKeyPair() {
+
+	  ArrayList<Integer> primes = primeNumberGen(PRIME_SIZE);
+	  Random random = new Random();
+	  int p_value = primes.get(random.nextInt(PRIME_SIZE - 1));
+	  int q_value = primes.get(random.nextInt(PRIME_SIZE - 1));
+	  int n_value = p_value * q_value;
+	  int lamdaValue = lambda(p_value, q_value);
+
+	  ArrayList<Integer> e_numbers = findE(lamdaValue);
+	  int publicKey = e_numbers.get(random.nextInt(e_numbers.size() - 1));
+	  int count = 1;
+
+	  while(((count * publicKey) - 1) % lamdaValue != 0) {
+			  count++;
+		  }
+	  int privateKey = count + lamdaValue * random.nextInt(lamdaValue);
+	  int[] keyPair = {publicKey, privateKey, n_value};
+	  return keyPair;
+  }
+
+  /**
+   * Produces the signature according to the keyPair and messages
+   * @param keyPair the keyPair generated by generateKeyPair
+   * @param message the message to be sent
+   * @return the signature.
+   */
+  public int signature(int[] keyPair, int message) {
+	  int cipherText = (int) (Math.pow(message, keyPair[0]) % keyPair[2]);
+	  return ((int)( Math.pow(signature(keyPair, message), keyPair[1]) % keyPair[2]));
+  }
+
+  /**
+   * Verify the keypairs and message
+   * @param keyPair the keypair that is generated by generateKeyPair
+   * @param message the message
+   * @return true if verified, false if not.
+   */
+  public boolean verify(int[] keyPair, int message) {
+	  return (Math.pow(signature(keyPair, message), keyPair[0]) % keyPair[2] == (int) (Math.pow(message, keyPair[0]) % keyPair[2]));
   }
 
   /**
