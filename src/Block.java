@@ -2,7 +2,7 @@ import java.util.Date;
 import java.util.ArrayList;
 
 public class Block {
-	// mining rewards and similar transactions come from or go to the imaginary
+	//mining rewards and similar transactions come from or go to the imaginary
 	// user represented by this key
 	public static int GENERATOR_KEY = -1;
 	
