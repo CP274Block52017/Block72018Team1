@@ -102,7 +102,7 @@ public class NumberMagic{
 		if(value != 2 && value % 2 == 0) {
 			return false;
 		}
-		while(checker < value) {
+		while(checker < Math.sqrt(value)) {
 			if(value % checker == 0) {
 				return false;
 			}

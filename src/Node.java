@@ -1,13 +1,14 @@
-import java.util.ArrayList;
-
 /**
  * A node that belongs to a network
  * @author Case Regan
  *
  */
-public class Node {
+public class Node implements Runnable {
+	private String data;
+	
 	private BlockChain localChain;
 	private Block workingBlock;
+	private boolean working;
 	
 	private int publicKey;
 	private int secretKey;
@@ -15,19 +16,37 @@ public class Node {
 	private Network network;
 	
 	public Node(int publicKey, int secretKey) {
+		data = "";
+		
+		working = false;
 		localChain = new BlockChain();
 		
 		this.publicKey = publicKey;
 		this.secretKey = secretKey;
 		
-		resetWorkingBlock();
+		setupWorkingBlock();
+		new Thread(this).start();
+	}
+	
+	/**
+	 * nodes can either be mining or not mining (represented by the boolean "working")
+	 * this function runs in the background and ensures that nodes are always ready to
+	 * start mining
+	 */
+	public void run() {
+		while(true) {
+			if(working) {
+				System.out.println(this + " is working...");
+				working = !work();
+			}
+		}
 	}
 
 	/**
 	 * resets the block that this node is trying to complete a proof of work for
 	 */
-	private void resetWorkingBlock() {
-		workingBlock = new Block(localChain.getHead().generateHash(), new Transaction(Block.GENERATOR_KEY, publicKey, 1.0));
+	private void setupWorkingBlock() {
+		workingBlock = new Block(data, localChain.getHead().generateHash());
 	}
 	
 	/**
@@ -37,7 +56,6 @@ public class Node {
 	public void addToNetwork(Network network) {
 		this.network = network;
 		this.network.addNode(this);
-		System.out.println(this + " added to " + network);
 	}
 	
 	/**
@@ -56,28 +74,13 @@ public class Node {
 		return secretKey;
 	}
 	
-	public double getBalance() {
-		double balance = 0.0;
-		ArrayList<Transaction> transactions = localChain.getAllTransactions();
-	
-		for(Transaction transaction : transactions) {
-			if(transaction.getRecieverKey() == publicKey) {
-				balance += transaction.getAmount();
-			} else if(transaction.getSenderKey() == publicKey) {
-				balance -= transaction.getAmount();
-			}
-		}
-		
-		return balance;
-	}
-	
 	/**
 	 * stores new data in this node
 	 * @param datum
 	 */
-	public void processNewTransaction(Transaction transaction) {
-		workingBlock.processNewTransaction(transaction);
-		System.out.println("the following transaction was processed: " + transaction);
+	public void processNewData(String datum) {
+		data += "\n" + datum;
+		setupWorkingBlock();
 	}
 	
 	/**
@@ -86,12 +89,25 @@ public class Node {
 	 */
 	public void processNewBlock(Block block) {
 		if(localChain.processNewBlock(block)) {
-			System.out.println(this + " has accepted a new block! Their chain now has a length of " + localChain.length());
-			resetWorkingBlock();
-			System.out.println(this + " has a balance of " + getBalance());
+			System.out.println(this + " has accepted a new block!");
+			setupWorkingBlock();
 		} else {
 			System.out.println(this + " has rejected a new block.");
 		}
+	}
+	
+	/**
+	 * starts or resumes mining
+	 */
+	public void startWork() {
+		working = true;
+	}
+	
+	/**
+	 * stop or pause mining
+	 */
+	public void interruptWork() {
+		working = false;
 	}
 	
 	/**
@@ -117,9 +133,5 @@ public class Node {
 	public void pushWorkingBlock() {
 		System.out.println(this + " is pushing a block to the network...");
 		network.broadcastNewBlock(workingBlock);
-	}
-	
-	public void pushTransaction(Transaction transaction) {
-		network.broadcastNewTransaction(transaction);
 	}
 }

@@ -38,7 +38,7 @@ public class ApplicationUI extends Application{
 		curr_scene = new UIScene(border, WIDTH, HEIGHT);
 		
 		amount = 100;
-		balance = new Label(amount + "Spam Coin");
+		balance = new Label(amount + " Spam Coin");
 		dashboard_btn = new Button("Dashboard");
 		transactions_btn = new Button("Transactions");
 		mining_btn = new Button("Mining");
@@ -54,8 +54,8 @@ public class ApplicationUI extends Application{
 		
 		initializeButtons(this);
 		root.getChildren().add(toolbar);
+
 		border.setTop(root);
-		border.setCenter(new InitialPage_fx());
 		primaryStage.setTitle("Spam Coin Wallet");
 		primaryStage.setResizable(true);
 		primaryStage.setScene(curr_scene);
@@ -101,7 +101,7 @@ public class ApplicationUI extends Application{
 		mining_btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				border.setCenter(new Mining_fx());
+				border.setCenter(new Mining_fx(frame));
 			}
 		});
 		
