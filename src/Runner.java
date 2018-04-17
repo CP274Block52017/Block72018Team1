@@ -8,7 +8,7 @@ public class Runner {
 		}
 		
 		Database.createDBAndUse();
-		new UIFrame();
+		new UIFrame();  
 		
 	}
 }

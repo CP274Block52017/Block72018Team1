@@ -18,7 +18,7 @@ public class UserIDUIState implements UIState {
 		frame.add(infoLabel);	
 		
 		String userID = IDGenerator.generateRandomID();
-		Database.addUsers(userID);
+		Database.addUsers(userID);  
 		JLabel idLabel = new JLabel(userID, SwingConstants.CENTER);
 		idLabel.setFont(frame.getStandardizedFont(32));
 		frame.add(idLabel);
