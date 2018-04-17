@@ -14,7 +14,7 @@ public class NumberMagic{
   public static class PrimeNumber{
 	  private int prime;
 	  private int count;
-	  
+
 	  /**
 	   * Constructor 1 for prime number intializes the count with 0;
 	   * @param _prime the prime number
@@ -106,7 +106,7 @@ public class NumberMagic{
 		if(value != 2 && value % 2 == 0) {
 			return false;
 		}
-		while(checker < value) {
+		while(checker < Math.sqrt(value)) {
 			if(value % checker == 0) {
 				return false;
 			}
@@ -164,13 +164,10 @@ public class NumberMagic{
 			  PrimeNumber p1 = (PrimeNumber) e1;
 			  PrimeNumber p2 = (PrimeNumber) e2;
 			  if(p1.equals(p2)) {
-
 				  if(p1.getCount() > p2.getCount()) {
 					  lcmprimes.add(new PrimeNumber(p1.getPrime(), p1.getCount()));
-
 				  }else {
 					  lcmprimes.add(new PrimeNumber(p2.getPrime(), p2.getCount()));
-
 				  }
 				  x1_primes.remove(p1);
 				  x2_primes.remove(p2);
@@ -187,10 +184,10 @@ public class NumberMagic{
   }
 
   /**
-   * Get the lamda of two values. lamda = lcm(prime1 -1, prime2 - 1)
+   * Get the lambda of two values. lambda = lcm(prime1 -1, prime2 - 1)
    * @param prime1 the first prime number
    * @param prime2 the second prime number
-   * @return the lamda value.
+   * @return the lambda value.
    */
   public int lambda(int prime1, int prime2) {
 	  return lcm(prime1 - 1, prime2 - 1);
@@ -217,14 +214,14 @@ public class NumberMagic{
   }
 
   /**
-   * Finds the E values where 1 < e < lamdaValue
-   * @param lamdaValue the biggest value;
+   * Finds the E values where 1 < e < lambdaValue
+   * @param lambdaValue the biggest value;
    * @return the ArrayList of E.
    */
-  public ArrayList<Integer> findE(int lamdaValue) {
+  public ArrayList<Integer> findE(int lambdaValue) {
 	  ArrayList<Integer> eValues = new ArrayList<Integer>();
-	  for(int i = lamdaValue; i > 1; i--) {
-		  if(relativelyPrime(lamdaValue, i)) {
+	  for(int i = lambdaValue; i > 1; i--) {
+		  if(relativelyPrime(lambdaValue, i)) {
 			  eValues.add(i);
 		  }
 	  }
@@ -242,16 +239,16 @@ public class NumberMagic{
 	  int p_value = primes.get(random.nextInt(PRIME_SIZE - 1));
 	  int q_value = primes.get(random.nextInt(PRIME_SIZE - 1));
 	  int n_value = p_value * q_value;
-	  int lamdaValue = lambda(p_value, q_value);
+	  int lambdaValue = lambda(p_value, q_value);
 
-	  ArrayList<Integer> e_numbers = findE(lamdaValue);
+	  ArrayList<Integer> e_numbers = findE(lambdaValue);
 	  int publicKey = e_numbers.get(random.nextInt(e_numbers.size() - 1));
 	  int count = 1;
 
-	  while(((count * publicKey) - 1) % lamdaValue != 0) {
+	  while(((count * publicKey) - 1) % lambdaValue != 0) {
 			  count++;
 		  }
-	  int privateKey = count + lamdaValue * random.nextInt(lamdaValue);
+	  int privateKey = count + lambdaValue * random.nextInt(lambdaValue);
 	  int[] keyPair = {publicKey, privateKey, n_value};
 	  return keyPair;
   }
@@ -282,15 +279,18 @@ public class NumberMagic{
    * @param args args
    */
   public static void main(String[] args) {
-	  int e1 = 239;
-	  int e2 = 349;
-	  NumberMagic e = new NumberMagic();
-	  int lamdaValue = e.lambda(e1, e2);
-	  System.out.println(lamdaValue);
-	  System.out.println("x1 prime: " + e1 + " x2 prime: " + e2 + " lamda is " + lamdaValue);
-	  ArrayList<Integer> eValues = e.findE(lamdaValue);
-	  for(int i = 0; i < eValues.size(); i++) {
-		  System.out.println("e" + i + ": " + eValues.get(i));
-	  }
+		Random random = new Random();
+		NumberMagic e = new NumberMagic();
+
+		ArrayList<Integer> primes = e.primeNumberGen(100);
+	  int e1 = primes.get(random.nextInt(99));
+	  int e2 = primes.get(random.nextInt(99));
+	  int lambdaValue = e.lambda(e1, e2);
+	  System.out.println(lambdaValue);
+	  System.out.println("x1 prime: " + e1 + " x2 prime: " + e2 + " lambda is " + lambdaValue);
+	  ArrayList<Integer> eValues = e.findE(lambdaValue);
+	  // for(int i = 0; i < eValues.size(); i++) {
+		//   System.out.println("e" + i + ": " + eValues.get(i));
+	  // }
   }
 }
