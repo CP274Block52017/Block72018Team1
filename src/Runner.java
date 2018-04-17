@@ -1,3 +1,8 @@
+/**
+ * contains the main method, runs a simple network with 10 auto-generated nodes and one that the user can control
+ * @author Case Regan
+ *
+ */
 public class Runner {
 	public static LocalNetwork GLOBAL_NETWORK = new LocalNetwork();
 	

@@ -15,6 +15,10 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
+	/**
+	 * getter methods for senderKey, recieverKey, and amount
+	 * @return
+	 */
 	public int getSenderKey() {
 		return senderKey;
 	}

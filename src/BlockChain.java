@@ -1,5 +1,10 @@
 import java.util.*;
 
+/**
+ * represents a chain of blocks that store transactions
+ * @author Case Regan
+ *
+ */
 public class BlockChain {	
 	private ArrayList<Block> chain;
 	

@@ -1,4 +1,9 @@
-
+/**
+ * a not-yet-implemented version of Network that will be able to communicate with nodes on other computers
+ * most likely an icebox goal
+ * @author Case Regan
+ *
+ */
 public class RemoteNetwork implements Network {
 
 	@Override

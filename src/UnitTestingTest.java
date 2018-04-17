@@ -2,6 +2,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Testing environement
+ * @author Case Regan
+ *
+ */
 public class UnitTestingTest {
 
 	private BlockChain genesisChain;

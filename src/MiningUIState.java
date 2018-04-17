@@ -2,6 +2,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * an implementation of UIState that lets the user mine by repeatedly clicking on a button
+ * @author Case Regan
+ *
+ */
 public class MiningUIState implements UIState {
 	private JButton mineButton;
 	private JButton transactionButton;

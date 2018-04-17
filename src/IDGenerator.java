@@ -4,6 +4,11 @@
 
 import java.util.Random;
 
+/**
+ * generates a random id to identify users with
+ * @author Case Regan
+ *
+ */
 public class IDGenerator {
 	
 	private static final int ID_LENGTH = 10;

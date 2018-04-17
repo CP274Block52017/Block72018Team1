@@ -123,6 +123,10 @@ public class Node {
 		network.broadcastNewBlock(workingBlock);
 	}
 	
+	/**
+	 * broadcasts a transaction to the network
+	 * @param transaction
+	 */
 	public void pushTransaction(Transaction transaction) {
 		network.broadcastNewTransaction(transaction);
 	}
