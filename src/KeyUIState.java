@@ -2,6 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * an implementation of UIState that generates a keypair using a keypairgenerator
+ * the user gets to see their public key but their private one is hidden
+ * @author Case Regan
+ *
+ */
 public class KeyUIState implements UIState {
 	private JButton startButton;
 	
@@ -9,7 +15,6 @@ public class KeyUIState implements UIState {
 		startButton = new JButton("Start");
 	}
 	
-
 	public void addComponents(UIFrame frame) {
 		frame.setLayout(new GridLayout(3, 0));
 				

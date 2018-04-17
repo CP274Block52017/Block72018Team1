@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * a math-intensive class that generates a secure keypair based on complex rules
+ * @author Case Regan
+ *
+ */
 public class KeyPairGenerator {
 	public static final int PRIME_SIZE = 100;
 	private static int keysGenerated = 0;
@@ -11,7 +16,12 @@ public class KeyPairGenerator {
 	public KeyPairGenerator() {
 	}
 	
-	public static class PrimeNumber {
+	/**
+	 * a class representing a Prime Number
+	 * @author Kochi
+	 *
+	 */
+	private static class PrimeNumber {
 		int prime;
 		int count;
 		
@@ -53,6 +63,11 @@ public class KeyPairGenerator {
 		}
 	}
 	
+	/**
+	 * generates a list of prime numbers between 0 and maxidx
+	 * @param maxidx
+	 * @return
+	 */
 	public ArrayList<Integer> primeNumberGen(int maxidx) {
 		ArrayList<Integer> primeNumbers = new ArrayList<Integer>();
 		
@@ -70,6 +85,11 @@ public class KeyPairGenerator {
 		return primeNumbers;
 	}
 	
+	/**
+	 * checks if a number is prime or not
+	 * @param value
+	 * @return
+	 */
 	public boolean isPrimeNumber(int value) {
 		int checker = 3;
 		
@@ -86,6 +106,11 @@ public class KeyPairGenerator {
 		return true;
 	}
 	
+	/**
+	 * returns an ArrayList containing the prime factors of a number
+	 * @param x the number to factor
+	 * @return
+	 */
 	public ArrayList<PrimeNumber> primeFactorization(int x) {
 		int modx = x;
 		
@@ -233,9 +258,5 @@ public class KeyPairGenerator {
 		
 		keysGenerated++;
 		return keyPair;
-	}
-	
-	public int getNextKey(int input) {
-		return 0;
 	}
 }

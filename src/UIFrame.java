@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * the main UIFrame that the runner runs
+ * uses a state pattern to control what it is displaying at a given moment in time
+ * @author Case Regan
+ *
+ */
 public class UIFrame extends JFrame {
 	private Node localNode;
 	

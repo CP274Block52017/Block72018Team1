@@ -1,6 +1,11 @@
 import java.util.Date;
 import java.util.ArrayList;
 
+/**
+ * represents a data-storing block in a blockchain
+ * @author Case Regan
+ *
+ */
 public class Block {
 	// mining rewards and similar transactions come from or go to the imaginary
 	// user represented by this key

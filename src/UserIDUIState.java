@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * an implementation of UIState that generates an ID and displays it to the user
+ * @author Case Regan
+ *
+ */
 public class UserIDUIState implements UIState {
 
 	private JButton startButton;

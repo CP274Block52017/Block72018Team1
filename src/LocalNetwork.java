@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * an implementation of Network that runs locally for easy testing
+ * @author Case Regan
+ *
+ */
 public class LocalNetwork implements Network {
 	private ArrayList<Node> nodes;
 	
