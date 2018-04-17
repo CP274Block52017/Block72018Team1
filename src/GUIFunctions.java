@@ -10,18 +10,19 @@ _
 	public static void join() {
 		//switch to the UserIDUI state
 
+
 	}
 
-	public static void start(int[] keyPair, ApplicationUI frame) {
+	public static void start(int[] keyPair) {
 		Node localNode = new Node(keyPair[0], keyPair[1]);
-		localNode.addToNetwork(Runner.GLOBAL_NETWORK);
+		localNode.addToNetwork(ApplicationUI.GLOBAL_NETWORK);
 		frame.initializeLocalNode(localNode);
 		frame.setState(new Dashboard_fx());
 	}
 
 	public static void mine() {
     Node localNode = new Node(keyPair[0], keyPair[1]);
-    localNode.addToNetWork(Runner.GLOBAL_NETWORK);
+    localNode.addToNetWork(ApplicationUI.GLOBAL_NETWORK);
     localNode.startWork();
     frame.initializeLocalNode(localNode);
 	}

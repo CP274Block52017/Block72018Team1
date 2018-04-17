@@ -289,11 +289,11 @@ public class NumberMagic{
 		int[] keys = e.generateKeyPair();
 		System.out.println(keys[1]);
 		KeysIO sk = new KeysIO("ID", keys);
-		// sk.save();
-		int[] loadedkeys = KeysIO.load("ID.wlt");
-		for(int i = 0; i < loadedkeys.length; i++){
-			System.out.println(loadedkeys[i]);
-		}
+		sk.save();
+		// int[] loadedkeys = KeysIO.load("ID.wlt");
+		// for(int i = 0; i < loadedkeys.length; i++){
+		// 	System.out.println(loadedkeys[i]);
+		// }
 
   }
 }

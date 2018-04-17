@@ -11,7 +11,7 @@ public class KeysIO{
   }
 
   public void save(){
-    try(PrintWriter out = new PrintWriter(filename + ".wlt");){
+    try(PrintWriter out = new PrintWriter("/SpamCoin/" + filename + ".wlt");){
       out.println(keys[0]);
       out.println(keys[1]);
       out.println(keys[2]);
