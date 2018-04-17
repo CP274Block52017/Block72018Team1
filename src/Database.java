@@ -37,6 +37,24 @@ public class Database {
 		return result;
 	}
 	
+	
+	/**
+	 * This method helps to connect to database server
+	 */
+	public static void connectServer() {
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");
+			System.out.println("Connection made");
+			statement = connection.createStatement();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	/**
+	 * This method connects to the server and creates the database with tables implemented
+	 */
 	public static void createDBAndUse() {
 		try {
 			
@@ -77,17 +95,12 @@ public class Database {
 	
 	}
 	
-	public static void connectServer() {
-		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");
-			System.out.println("Connection made");
-			statement = connection.createStatement();
-		}
-		catch(SQLException e) {
-			e.printStackTrace();
-		}	
-	}
 	
+	
+	/**
+	 * This method adds new user to the database after a random user ID is generated
+	 * @param userID
+	 */
 	public static void addUsers(String userID) {
 		try{
 			connectServer();
