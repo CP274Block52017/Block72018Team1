@@ -13,6 +13,8 @@ public class SignatureMagic {
 	private final static String FILENAME = "SPAMCOIN.wlt";
 	
 	public SignatureMagic(int _message) {
+		
+
 		message = _message;
 		try {
 			filereader = new FileReader(FILENAME);
@@ -31,10 +33,9 @@ public class SignatureMagic {
 	   * @param message the message
 	   * @return true if verified, false if not.
 	   */
-	  public boolean verify() {
-		  int _signature = signature();
+	  public boolean verify(int signature, int senderPK, int senderNValue, int cipherText) {
 		  
-		  return (Math.pow(_signature, publicKey) % n_value == (int) (Math.pow(message, publicKey) % n_value));
+		  return ((int)(Math.pow(signature, senderPK) % senderNValue) == cipherText);
 	  }
 	  
 		
@@ -44,9 +45,10 @@ public class SignatureMagic {
 	   * @param message the message to be sent
 	   * @return the signature.
 	   */
-	  public int signature() {		  
+	  public int signature() {
 		  int cipherText = (int) (Math.pow(message, publicKey) % n_value);
-		  return ((int)( Math.pow(cipherText, privateKey) % n_value));
+
+		  return ((int)(Math.pow(cipherText, privateKey) % n_value));
 	  }
 
 }
