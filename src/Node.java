@@ -93,6 +93,7 @@ public class Node {
 			System.out.println(this + " has accepted a new block! Their chain now has a length of " + localChain.length());
 			resetWorkingBlock();
 			System.out.println(this + " has a balance of " + getBalance());
+			Database.addBalance(getPublicKey(),getBalance());
 		} else {
 			System.out.println(this + " has rejected a new block.");
 		}

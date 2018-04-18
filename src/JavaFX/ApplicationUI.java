@@ -134,6 +134,7 @@ public class ApplicationUI extends Application{
 	}
 	
 	public static void main(String[] args) {
+		Database.createDBAndUse();
 		launch(args);
 	}
 }
