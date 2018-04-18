@@ -21,7 +21,7 @@ public class KeyPairGenerator {
 	 * @author Kochi
 	 *
 	 */
-	private static class PrimeNumber {
+	public static class PrimeNumber {
 		int prime;
 		int count;
 		
