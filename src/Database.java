@@ -1,8 +1,3 @@
-/**
- * This class is the database storing all user public keys, account balance and their transaction history,
- * will update balance automatically whenever a transaction gets verified
- */
-
 import java.sql.*;
 import java.util.*;
 
@@ -41,10 +36,12 @@ public class Database {
 		ResultSet result = statement.executeQuery(query);
 		return result;
 	}
+	
+
 
 
 	/**
-	 * This method helps to connect to database server for set up
+	 * This method helps to connect to database server
 	 */
 	public static void connectServer() {
 		try {
@@ -59,7 +56,6 @@ public class Database {
 
 	/**
 	 * This method connects to the server and creates the database with tables implemented
-	 * Contact lists data use is put in icebox for this implementation
 	 */
 	public static void createDBAndUse() {
 		try {
@@ -71,8 +67,7 @@ public class Database {
 
 			// makes sure that all following queries are directed at the created database
 			executeSQL("USE CoinDatabase;", statement);
-			
-			// creates the tables if not existing
+
 			executeSQL("CREATE TABLE IF NOT EXISTS users ("
 					+ "PublicKey int, "
 					+ "Balance double, "
@@ -104,7 +99,7 @@ public class Database {
 
 
 	/**
-	 * This method adds new user to the database after its public key is generated
+	 * This method adds new user to the database after a random user ID is generated
 	 * @param userID
 	 */
 	public static void addUsers(int userID) {
@@ -118,12 +113,6 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * This method updates the account balance of the user whenever a transaction gets verified
-	 * @param UserKey
-	 * @param CoinBalance
-	 */
 	public static void addBalance(int UserKey, double CoinBalance) {
 		try{
 			connectServer();
@@ -135,29 +124,37 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public static double getBalance(int publicKey) {
+		double balance = -1;
+		try {
+			connectServer();
+			executeSQL("USE CoinDatabase;", statement);
+			ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE PublicKey = '" + Integer.toString(publicKey) + "';");
+			rs.next();
+			balance = rs.getDouble("Balance");
+			
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return balance;
+	}
 
-	/**
-	 * This method uploads transaction data to the database with involved users
-	 * @param UserKey
-	 * @param history
-	 */
-	public static void addTransaction(int UserKey, String transaction) {
+	public static void addTransaction(int UserKey, String history) {
 		try{
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
 			executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(UserKey) + 
-											"', '" + transaction +  "');", statement);
+											"', '" + history +  "');", statement);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/**
-	 * This method returns an ArrayList containing all verified transaction history 
-	 * @param UserKey
-	 * @return
-	 */
 	public static ArrayList<String> getTransactionHistory(int UserKey){
 		try{
 			connectServer();
@@ -179,5 +176,72 @@ public class Database {
 			return null;
 		}
 	}
-	
+
+	public static void main(String[] args) {
+		System.out.println("Execution started");
+		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");) {
+			System.out.println("Connection made");
+			Statement statement = connection.createStatement();
+
+
+			// creates the database if not existing
+			executeSQL("CREATE DATABASE IF NOT EXISTS CoinDatabase;", statement);
+
+			// makes sure that all following queries are directed at the created database
+			executeSQL("USE CoinDatabase;", statement);
+		}
+
+
+			// creates a table named users with fields id (the primary key) and the user's friends
+//			executeSQL("CREATE TABLE users ("
+//					+ "userID varchar(50), "
+//					+ "friends varchar(50), "
+//					+ "PRIMARY KEY (userID)"
+//					+ ");",
+//					statement);
+//
+//
+//			// creates a table named transactions with fields id (which is the primary key),
+//			// history (which represents the past transactions) which references
+//			// the id field of a row in the users table
+//			executeSQL("CREATE TABLE transactions ("
+//
+//					+ "transactionID varchar(50), "
+//					+ "history varchar(50), "
+//					+ "PRIMARY KEY (transactionID), "
+//					+ "FOREIGN KEY (history) REFERENCES users(userID)"
+//					+ ");",
+//					statement);
+//
+//			// populates the users table with three hardcoded values
+//			executeSQL("INSERT INTO users(userID) VALUES ('case');", statement);
+//			executeSQL("INSERT INTO users(userID) VALUES ('jia');", statement);
+//			executeSQL("INSERT INTO users(userID) VALUES ('kon');", statement);
+//
+//			// queries the CoinDatabase to get all id fields from the users table
+//			ResultSet userIDs = executeSELECT("SELECT userID FROM users;", statement);
+//
+//			ArrayList<String> ids = new ArrayList<String>();
+//
+//			// iterates through the query results and records the values in a pair of ArrayLists to avoid some concurrency problems
+//			while(userIDs.next()) {
+//
+//				String id = userIDs.getString("userID");
+//				ids.add(id);
+//			}
+//
+//			// populates the projects table using values based on the queried ones
+//			for(int i = 0; i < ids.size(); i++) {
+//
+//				executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(i) + "', '" + ids.get(i) +  "');", statement);
+//			}
+
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
+//
+//			System.out.println("Finished, program exiting");
+//
+//  
+	}
 }
