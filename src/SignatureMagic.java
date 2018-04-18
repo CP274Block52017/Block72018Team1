@@ -1,12 +1,28 @@
+import java.io.*;
+
 
 public class SignatureMagic {
 	
-	private int[] keyPair;
+	private int publicKey;
+	private int privateKey;
+	private int n_value;
 	private int message;
+	private FileReader filereader;
+	private BufferedReader buffered;
 	
-	public SignatureMagic(int[] _keyPair, int _message) {
-		keyPair = _keyPair;
+	private final static String FILENAME = "SPAMCOIN.wlt";
+	
+	public SignatureMagic(int _message) {
 		message = _message;
+		try {
+			filereader = new FileReader(FILENAME);
+			buffered = new BufferedReader(filereader);
+			publicKey = Integer.parseInt(buffered.readLine());
+			privateKey = Integer.parseInt(buffered.readLine());
+			n_value = Integer.parseInt(buffered.readLine());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	  /**
@@ -15,10 +31,8 @@ public class SignatureMagic {
 	   * @param message the message
 	   * @return true if verified, false if not.
 	   */
-	  public boolean verify(int[] keyPair, int message) {
-		  int _signature = signature(keyPair, message);
-		  int publicKey = keyPair[0];
-		  int n_value = keyPair[2];
+	  public boolean verify() {
+		  int _signature = signature();
 		  
 		  return (Math.pow(_signature, publicKey) % n_value == (int) (Math.pow(message, publicKey) % n_value));
 	  }
@@ -30,12 +44,7 @@ public class SignatureMagic {
 	   * @param message the message to be sent
 	   * @return the signature.
 	   */
-	  public int signature(int[] keyPair, int message) {
-		  
-		  int publicKey = keyPair[0];
-		  int privateKey = keyPair[1];
-		  int n_value = keyPair[2];
-		  
+	  public int signature() {		  
 		  int cipherText = (int) (Math.pow(message, publicKey) % n_value);
 		  return ((int)( Math.pow(cipherText, privateKey) % n_value));
 	  }

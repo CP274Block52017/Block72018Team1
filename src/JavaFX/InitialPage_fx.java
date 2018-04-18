@@ -47,6 +47,7 @@ public class InitialPage_fx extends BorderPane implements PaneState {
 					int[] keyPair = new KeyPairGenerator().generateNext();
 					KeysIO.save(keyPair);
 					Node localNode = new Node(keyPair[0], keyPair[1]);
+					Database.addUsers(localNode.getPublicKey());
 					localNode.addToNetwork(ApplicationUI.GLOBAL_NETWORK);
 					frame.initializeLocalNode(localNode);
 					NewUser_fx page = new NewUser_fx(frame);

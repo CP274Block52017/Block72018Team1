@@ -1,5 +1,5 @@
 /**
- * no computation should take place in the network — it should all be done by the nodes
+ * no computation should take place in the network - it should all be done by the nodes
  * however, the network should help the nodes communicate
  * @author Case Regan
  *
