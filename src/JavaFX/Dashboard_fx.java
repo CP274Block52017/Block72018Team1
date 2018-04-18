@@ -15,6 +15,9 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 	
 	private ApplicationUI frame;
 	private Label verified;
+	private Label title;
+	
+	private final static Font DEFAULT_FONT = new Font("Aspergit", 20);
 	
 	public Dashboard_fx(ApplicationUI _frame) {
 		frame = _frame;
@@ -29,14 +32,21 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 		}
 		*/
 		for(String transaction : Database.getTransactionHistory(frame.getLocalNode().getPublicKey())) {
-			transactions += transaction + "\n";  
+			transactions += transaction + "\n ";  
 		}
 		//System.out.println(transactions);
-		verified = new Label("Verified"+"\n"+transactions);
+		title = new Label("Dashboard");
+		title.setFont(ApplicationUI.TITLE_FONT);
+		verified = new Label(" Verified"+"\n "+transactions);
+		verified.setFont(DEFAULT_FONT);
+		
 		VBox vbox = new VBox();
+		vbox.getChildren().add(title);
+		vbox.getChildren().add(new Separator());
 		vbox.getChildren().add(verified);
+		vbox.setSpacing(20);
 		this.setCenter(vbox);
-		vbox.setAlignment(Pos.CENTER);
+//		vbox.setAlignment(Pos.CENTER);
 	}
 
 }

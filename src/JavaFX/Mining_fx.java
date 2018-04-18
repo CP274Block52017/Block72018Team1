@@ -14,7 +14,6 @@ import javafx.scene.text.Font;
 
 public class Mining_fx extends BorderPane implements PaneState{
 	
-	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 	private static final int BUTTON_SIZE = 300;
 	private Button mine;
 	private VBox vbox;
@@ -33,12 +32,13 @@ public class Mining_fx extends BorderPane implements PaneState{
 	public void addComponents() {
 		vbox = new VBox();
 		label = new Label("Mine the spam coin");
-		label.setFont(TITLE_FONT);
+		label.setFont(ApplicationUI.TITLE_FONT);
 		mine = new Button("MINE");
-		mine.setFont(TITLE_FONT);
+		mine.setFont(ApplicationUI.TITLE_FONT);
 		mine.setPrefSize(BUTTON_SIZE, BUTTON_SIZE);
 		vbox.getChildren().add(label);
 		vbox.getChildren().add(new Separator());
+		vbox.setSpacing(20);
 		this.setTop(vbox);
 		this.setCenter(mine);
 		}

@@ -1,3 +1,5 @@
+import java.awt.GraphicsEnvironment;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,7 +33,7 @@ public class ApplicationUI extends Application{
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 500;
 	
-	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
+	public static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 
 	
 
@@ -47,6 +49,8 @@ public class ApplicationUI extends Application{
 			border.setCenter(new Dashboard_fx(this));
 			setDashboardTemplate();
 		}
+		
+		
 			
 		
 		primaryStage.setTitle("Spam Coin Wallet");
@@ -56,6 +60,7 @@ public class ApplicationUI extends Application{
 
 		
 	}
+
 	
 	public void setDashboardTemplate()
 	{

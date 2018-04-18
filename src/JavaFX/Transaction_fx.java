@@ -22,7 +22,6 @@ public class Transaction_fx extends BorderPane implements PaneState {
 	private Label title;
 	private Label to;
 	private Label amount;
-	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 	private static final Font CONTENT_FONT = new Font("Aspergit", 24);
 	private ApplicationUI frame;
 	
@@ -34,7 +33,7 @@ public class Transaction_fx extends BorderPane implements PaneState {
 		contactButton = new Button("Contact");
 		to.setFont(CONTENT_FONT);
 		amount.setFont(CONTENT_FONT);
-		title.setFont(TITLE_FONT);
+		title.setFont(ApplicationUI.TITLE_FONT);
 		sendButton = new Button("Send");
 		amountField = new TextField();
 		amountField.setPromptText("Amount");
