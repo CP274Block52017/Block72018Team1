@@ -75,7 +75,7 @@ public class Transaction_fx extends BorderPane implements PaneState {
 				Transaction t = new Transaction(frame.getLocalNode().getPublicKey(), Integer.parseInt(receiverField.getText()), Double.parseDouble(amountField.getText()));
 				frame.getLocalNode().pushTransaction(t);
 				
-				Database.addTransaction(t);
+				Database.addTransaction(frame.getLocalNode().getPublicKey(),t.toString());
 				frame.updateBalance();
 				
 			}
