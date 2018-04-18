@@ -101,6 +101,8 @@ public class Node {
 	public void processNewBlock(Block block) {
 		if(localChain.processNewBlock(block)) {
 			System.out.println(this + " has accepted a new block! Their chain now has a length of " + localChain.length());
+			System.out.println(block.getLatestTransaction().toString());
+			Database.addTransaction(publicKey,block.getLatestTransaction().toString());
 			resetWorkingBlock();
 			System.out.println(this + " has a balance of " + getBalance());
 			Database.addBalance(getPublicKey(),getBalance());

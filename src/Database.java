@@ -90,7 +90,7 @@ public class Database {
 
 			executeSQL("CREATE TABLE IF NOT EXISTS transactions ("
 					+ "PublicKey int, "					
-					+ "history varchar(50), "
+					+ "history varchar(255), "
 					+ "PRIMARY KEY (history) "
 					+ ");",
 					statement);
