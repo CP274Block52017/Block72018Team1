@@ -14,6 +14,7 @@ public class KeyPairGenerator {
 	 * generates a pair of keys based on an autoincrementing seed
 	 */
 	public KeyPairGenerator() {
+	
 	}
 	
 	/**
@@ -21,7 +22,7 @@ public class KeyPairGenerator {
 	 * @author Kochi
 	 *
 	 */
-	private static class PrimeNumber {
+	public static class PrimeNumber {
 		int prime;
 		int count;
 		

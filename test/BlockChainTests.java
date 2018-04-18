@@ -7,7 +7,7 @@ import org.junit.Test;
  * @author Case Regan
  *
  */
-public class UnitTestingTest {
+public class BlockChainTests {
 
 	private BlockChain genesisChain;
 	
@@ -40,5 +40,16 @@ public class UnitTestingTest {
 	public void testInvalidChain() {
 		setup();
 		assertFalse(invalidChain.isValid());
+	}
+	
+	@Test
+	public void testProofOfWork() {
+		setup();
+		
+		while(!genesisChain.getHead().passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros())) {
+			genesisChain.getHead().nextState();
+		}
+		
+		assertTrue(genesisChain.getHead().passesProofOfWork(Runner.GLOBAL_NETWORK.getRequiredZeros()));
 	}
 }
