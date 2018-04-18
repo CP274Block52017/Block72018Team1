@@ -60,6 +60,7 @@ public class BlockChain {
 	}
 	
 	/**
+	 * This method calculates length of the block chain
 	 * @return the number of blocks in this chain
 	 */
 	public int length() {
@@ -75,7 +76,7 @@ public class BlockChain {
 	}
 	
 	/**
-	 * processe a block and adds it to the chain and returns true if it is valid, otherwise returns false
+	 * This method processes a block and adds it to the chain and returns true if it is valid, otherwise returns false
 	 * @param block
 	 * @return whether the block is valid
 	 */
