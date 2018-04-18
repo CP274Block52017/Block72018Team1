@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * a class that holds all information necessary for a transaction
  * @author Case Regan
@@ -9,10 +12,10 @@ public class Transaction {
 	private int signature;
 	private int n;
 	private double amount;
-	private int id;
+	private long id;
 	// signature?
 	
-	public Transaction(int senderKey, int recieverKey, int n, int id, double amount) {
+	public Transaction(int senderKey, int recieverKey, int n, long id, double amount) {
 		this.senderKey = senderKey;
 		this.recieverKey = recieverKey;
 		this.signature = signature;
@@ -42,7 +45,7 @@ public class Transaction {
 		this.n = n;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -82,8 +85,9 @@ public class Transaction {
 	 * explains what this transaction is with a String
 	 */
 	public String toString() {
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSS").format(new Date());
 		if(senderKey == Block.GENERATOR_KEY) {
-			return recieverKey + " recieved " + amount + " from mining rewards";
+			return recieverKey + " recieved " + amount + " from mining rewards at "+timeStamp;
 		}
 		return "Sender " + senderKey + " sent " + amount + " to " + recieverKey;
 	}

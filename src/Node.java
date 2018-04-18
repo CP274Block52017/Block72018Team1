@@ -91,6 +91,8 @@ public class Node {
 	public void processNewBlock(Block block) {
 		if(localChain.processNewBlock(block)) {
 			System.out.println(this + " has accepted a new block! Their chain now has a length of " + localChain.length());
+			System.out.println(block.getLatestTransaction().toString());
+			Database.addTransaction(publicKey,block.getLatestTransaction().toString());
 			resetWorkingBlock();
 			System.out.println(this + " has a balance of " + getBalance());
 			Database.addBalance(getPublicKey(),getBalance());
@@ -109,6 +111,7 @@ public class Node {
 		if(workingBlock.passesProofOfWork(network.getRequiredZeros())) {
 			System.out.println(this + " has completed work!");
 			pushWorkingBlock();
+			
 			return true;
 		} 
 
@@ -122,6 +125,7 @@ public class Node {
 	public void pushWorkingBlock() {
 		System.out.println(this + " is pushing a block to the network...");
 		network.broadcastNewBlock(workingBlock);
+		
 	}
 	
 	/**
