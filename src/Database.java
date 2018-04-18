@@ -112,6 +112,15 @@ public class Database {
 		}
 	}
 	
+	public static void addTransaction(Transaction t)
+	{
+		
+	}
+	public static ArrayList<Transaction> getTransactionHistory()
+	{
+		return null;
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("Execution started");
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");) {

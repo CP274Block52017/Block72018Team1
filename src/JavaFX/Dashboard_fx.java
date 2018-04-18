@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +15,6 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 	
 	private ApplicationUI frame;
 	private Label verified;
-	private Label unverified;
 	
 	public Dashboard_fx(ApplicationUI _frame) {
 		frame = _frame;
@@ -26,8 +26,12 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 		for(Transaction transaction : frame.getLocalNode().getLocalChain().getAllTransactions()) {
 			transactions += transaction + "\n";
 		}
-		System.out.println(transactions);
-
+		//System.out.println(transactions);
+		verified = new Label("Verified"+"\n"+transactions);
+		VBox vbox = new VBox();
+		vbox.getChildren().add(verified);
+		this.setCenter(vbox);
+		vbox.setAlignment(Pos.CENTER);
 	}
 
 }

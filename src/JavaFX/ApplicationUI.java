@@ -29,7 +29,7 @@ public class ApplicationUI extends Application{
 	
 	
 	public static final int WIDTH = 1000;
-	public static final int HEIGHT = 700;
+	public static final int HEIGHT = 500;
 	
 	private static final Font TITLE_FONT = new Font("Aspergit Light", 60);
 
@@ -43,7 +43,11 @@ public class ApplicationUI extends Application{
 		if(firstTime)
 			border.setCenter(new InitialPage_fx(this));
 		else
+		{
+			border.setCenter(new Dashboard_fx(this));
 			setDashboardTemplate();
+		}
+			
 		
 		primaryStage.setTitle("Spam Coin Wallet");
 		primaryStage.setResizable(true);
