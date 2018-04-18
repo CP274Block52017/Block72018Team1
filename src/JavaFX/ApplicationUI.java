@@ -29,13 +29,10 @@ public class ApplicationUI extends Application{
 	
 	public static LocalNetwork GLOBAL_NETWORK = new LocalNetwork();
 	
-	
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 500;
 	
 	public static final Font TITLE_FONT = new Font("Aspergit Light", 60);
-
-	
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -50,21 +47,16 @@ public class ApplicationUI extends Application{
 			setDashboardTemplate();
 		}
 		
-		
-			
-		
 		primaryStage.setTitle("Spam Coin Wallet");
 		primaryStage.setResizable(true);
 		primaryStage.setScene(curr_scene);
 		primaryStage.show();
-
-		
 	}
 
 	
 	public void setDashboardTemplate()
 	{
-		amount = getLocalNode().getBalance();
+		amount = Database.getBalance(localNode.getPublicKey());
 		balance = new Label(amount + " Spam Coin");
 		dashboard_btn = new Button("Dashboard");
 		transactions_btn = new Button("Transactions");

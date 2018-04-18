@@ -72,8 +72,8 @@ public class Transaction_fx extends BorderPane implements PaneState {
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String amount = amountField.getText();
-				String receiver = receiverField.getText();
+				double amount = Double.parseDouble(amountField.getText());
+				int receiver = Integer.parseInt(receiverField.getText());
 				System.out.println("SENDING: " + amount + " SP to " + receiver);
 				int publicKey=0;
 				int privateKey;
@@ -91,9 +91,11 @@ public class Transaction_fx extends BorderPane implements PaneState {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Transaction t = new Transaction(publicKey, Integer.parseInt(receiverField.getText()), n_value,Database.getTransactionHistory(publicKey).size()+1, Double.parseDouble(amountField.getText()));
+				Transaction t = new Transaction(publicKey, receiver, n_value,Database.getTransactionHistory(publicKey).size()+1, amount);
 				SignatureGenerator siggen = new SignatureGenerator(t.message());
 				t.setSignature(siggen.signature());
+				Database.receiveSpamCoin(receiver, amount);
+
 				
 				frame.getLocalNode().pushTransaction(t);
 				
