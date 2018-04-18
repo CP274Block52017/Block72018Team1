@@ -10,7 +10,7 @@ public class Node {
 	private Block workingBlock;
 	
 	private int publicKey;
-	private int secretKey;
+	private int privateKey;
 	
 	private Network network;
 	
@@ -18,7 +18,7 @@ public class Node {
 		localChain = new BlockChain();
 		
 		this.publicKey = publicKey;
-		this.secretKey = secretKey;
+		this.privateKey = secretKey;
 		
 		resetWorkingBlock();
 	}
@@ -52,8 +52,8 @@ public class Node {
 	 * a getter method for this node's private key
 	 * @return the private key
 	 */
-	public int getSecretKey() {
-		return secretKey;
+	public int getPrivateKey() {
+		return privateKey;
 	}
 	
 	public BlockChain getLocalChain() {
