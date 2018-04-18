@@ -23,7 +23,12 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 	@Override
 	public void addComponents() {
 		String transactions = "";
+		/*
 		for(Transaction transaction : frame.getLocalNode().getLocalChain().getAllTransactions()) {
+			transactions += transaction + "\n";
+		}
+		*/
+		for(Transaction transaction : Database.getTransactionHistory()) {
 			transactions += transaction + "\n";
 		}
 		//System.out.println(transactions);

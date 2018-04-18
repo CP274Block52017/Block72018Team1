@@ -72,8 +72,10 @@ public class Transaction_fx extends BorderPane implements PaneState {
 				String amount = amountField.getText();
 				String receiver = receiverField.getText();
 				System.out.println("SENDING: " + amount + " SP to " + receiver);
+				Transaction t = new Transaction(frame.getLocalNode().getPublicKey(), Integer.parseInt(receiverField.getText()), Double.parseDouble(amountField.getText()));
+				frame.getLocalNode().pushTransaction(t);
 				
-				frame.getLocalNode().pushTransaction(new Transaction(frame.getLocalNode().getPublicKey(), Integer.parseInt(receiverField.getText()), Double.parseDouble(amountField.getText())));
+				Database.addTransaction(t);
 				frame.updateBalance();
 				
 			}

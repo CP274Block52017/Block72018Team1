@@ -6,7 +6,11 @@
 public class Transaction {
 	private int senderKey;
 	private int recieverKey;
+	private int signature;
+	private int n;
 	private double amount;
+	private int id;
+	private int message;
 	// signature?
 	
 	public Transaction(int senderKey, int recieverKey, double amount) {
