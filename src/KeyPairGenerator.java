@@ -14,6 +14,7 @@ public class KeyPairGenerator {
 	 * generates a pair of keys based on an autoincrementing seed
 	 */
 	public KeyPairGenerator() {
+	
 	}
 	
 	/**
