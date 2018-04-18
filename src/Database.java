@@ -84,7 +84,7 @@ public class Database {
 			executeSQL("CREATE TABLE IF NOT EXISTS transactions ("
 					+ "PublicKey int, "					
 					+ "history varchar(50), "
-					+ "PRIMARY KEY (PublicKey) "
+					+ "PRIMARY KEY (history) "
 					+ ");",
 					statement);
 		}
@@ -105,7 +105,7 @@ public class Database {
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
 			executeSQL("INSERT INTO users(PublicKey) VALUES ('" + Integer.toString(userID) + "');", statement);
-			executeSQL("INSERT INTO transactions(PublicKey) VALUES ('" + Integer.toString(userID) + "');", statement);
+			//executeSQL("INSERT INTO transactions(PublicKey) VALUES ('" + Integer.toString(userID) + "');", statement);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -127,11 +127,33 @@ public class Database {
 		try{
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
-			executeSQL("UPDATE transaction SET history = " + history + " WHERE PublicKey = '" +
-														Integer.toString(UserKey) + "';", statement);
+			executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(UserKey) + 
+											"', '" + history +  "');", statement);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static ArrayList<String> getTransactionHistory(int UserKey){
+		try{
+			connectServer();
+			executeSQL("USE CoinDatabase;", statement);
+			ResultSet rset = executeSELECT("SELECT history, PublicKey FROM transactions;", statement);
+			ArrayList<String> transactionHistory = new ArrayList<String>();
+			while(rset.next()) {
+				String transaction = rset.getString("history");
+				int PublicKey = rset.getInt("PublicKey");
+				if (PublicKey == UserKey) {
+					transactionHistory.add(transaction);
+				}
+				
+			}
+			return transactionHistory;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
