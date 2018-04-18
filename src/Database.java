@@ -153,6 +153,21 @@ public class Database {
 		
 		return balance;
 	}
+    
+    public static void receiveSpamCoin(int receiverKey, double amount) {
+        try {
+            connectServer();
+            executeSQL("USE CoinDatabase;", statement);
+
+            ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE PublicKey = '" + Integer.toString(receiverKey) + "';");
+            rs.next();
+            double balance = rs.getDouble("Balance") + amount;
+            executeSQL("UPDATE users SET Balance = '" + Double.toString(balance) + "' WHERE PublicKey = '" +
+                    Integer.toString(receiverKey) + "';", statement);
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/**
 	 * This method uploads transaction data to the database with involved users
