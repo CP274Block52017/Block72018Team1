@@ -29,7 +29,7 @@ public class Dashboard_fx extends BorderPane implements PaneState {
 		}
 		*/
 		for(String transaction : Database.getTransactionHistory(frame.getLocalNode().getPublicKey())) {
-			transactions += transaction + "\n";
+			transactions += transaction + "\n";  
 		}
 		//System.out.println(transactions);
 		verified = new Label("Verified"+"\n"+transactions);

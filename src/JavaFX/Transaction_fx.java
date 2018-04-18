@@ -92,7 +92,7 @@ public class Transaction_fx extends BorderPane implements PaneState {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				Transaction t = new Transaction(publicKey, Integer.parseInt(receiverField.getText()), n_value,Database.getTransactionHistory().size()+1, Double.parseDouble(amountField.getText()));
+				Transaction t = new Transaction(publicKey, Integer.parseInt(receiverField.getText()), n_value,Database.getTransactionHistory(publicKey).size()+1, Double.parseDouble(amountField.getText()));
 				SignatureGenerator siggen = new SignatureGenerator(t.message());
 				t.setSignature(siggen.signature());
 				
