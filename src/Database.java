@@ -1,16 +1,12 @@
-/**
- * This class is the database storing all user public keys, account balance and their transaction history,
- * will update balance automatically whenever a transaction gets verified
- */
 import java.sql.*;
 import java.util.*;
 
 /**
  * @author Case Regan and Jia Kang
- * creates a database named CoinData with two tables, users and transactions
- *
- *
+ * This class is the database storing all user public keys, account balance and their transaction history,
+ * will update balance automatically whenever a transaction gets verified
  */
+ 
 public class Database {
 	// change this value to suit your needs
 	public static final String PORT_NUMBER = "8889";
@@ -104,7 +100,7 @@ public class Database {
 
 
 	/**
-	 * This method adds new user to the database after a random user ID is generated
+	 * This method adds new user to the database after the user public key is generated
 	 * @param userID
 	 */
 	public static void addUsers(int userID) {
@@ -137,9 +133,9 @@ public class Database {
 	}
 	
 	/**
-	 * This method gets the balance of user from database
-	 * @param publicKey 
-	 * @return the balance of user associated with the public key
+	 * This method get account balance of the user
+	 * @param publicKey
+	 * @return balance of user account
 	 */
 	public static double getBalance(int publicKey) {
 		double balance = -1;
@@ -163,12 +159,12 @@ public class Database {
 	 * @param UserKey
 	 * @param history
 	 */
-	public static void addTransaction(int UserKey, String history) {
+	public static void addTransaction(int UserKey, String transaction) {
 		try{
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
 			executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(UserKey) + 
-											"', '" + history +  "');", statement);
+											"', '" + transaction +  "');", statement);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -178,7 +174,7 @@ public class Database {
 	/**
 	 * This method returns an ArrayList containing all verified transaction history 
 	 * @param UserKey
-	 * @return
+	 * @return an ArrayList containing all transaction history
 	 */
 	public static ArrayList<String> getTransactionHistory(int UserKey){
 		try{
@@ -202,4 +198,3 @@ public class Database {
 		}
 	}
 }
-
