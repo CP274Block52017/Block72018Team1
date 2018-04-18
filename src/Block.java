@@ -92,7 +92,7 @@ public class Block {
 		if(sv.verify())
 		{
 			transactions.add(transaction);
-			Database.addTransaction(transaction);
+			Database.addTransaction(publicKey,transaction.toString());
 		}
 		
 	}
