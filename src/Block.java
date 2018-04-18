@@ -1,4 +1,7 @@
 import java.util.Date;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -67,7 +70,31 @@ public class Block {
 	 * @param transaction
 	 */
 	public void processNewTransaction(Transaction transaction) {
-		transactions.add(transaction);
+		int publicKey=0;
+		int privateKey;
+		int n_value=0;
+		int message;
+		FileReader filereader;
+		BufferedReader buffered;
+		String FILENAME = "SPAMCOIN.wlt";
+		try {
+			filereader = new FileReader(FILENAME);
+			buffered = new BufferedReader(filereader);
+			publicKey = Integer.parseInt(buffered.readLine());
+			privateKey = Integer.parseInt(buffered.readLine());
+			n_value = Integer.parseInt(buffered.readLine());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//int _signature, int _senderPK, int _senderNValue, int _cipherText
+		int ciphertext = (int) (Math.pow(transaction.message(), publicKey) % n_value);
+		SignatureVerifier sv = new SignatureVerifier(transaction.getSignature(),transaction.getSenderKey(),transaction.getN(),ciphertext);
+		if(sv.verify())
+		{
+			transactions.add(transaction);
+			Database.addTransaction(transaction);
+		}
+		
 	}
 	
 	/**

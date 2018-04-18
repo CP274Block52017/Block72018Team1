@@ -10,15 +10,58 @@ public class Transaction {
 	private int n;
 	private double amount;
 	private int id;
-	private int message;
 	// signature?
 	
-	public Transaction(int senderKey, int recieverKey, double amount) {
+	public Transaction(int senderKey, int recieverKey, int n, int id, double amount) {
 		this.senderKey = senderKey;
 		this.recieverKey = recieverKey;
+		this.signature = signature;
+		this.n= n;
+		this.id=id;
 		this.amount = amount;
 	}
 	
+	public int message()
+	{
+		return senderKey+recieverKey+n+(int)amount;
+	}
+	
+	public int getSignature() {
+		return signature;
+	}
+
+	public void setSignature(int signature) {
+		this.signature = signature;
+	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setSenderKey(int senderKey) {
+		this.senderKey = senderKey;
+	}
+
+	public void setRecieverKey(int recieverKey) {
+		this.recieverKey = recieverKey;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
 	/**
 	 * getter methods for senderKey, recieverKey, and amount
 	 * @return
