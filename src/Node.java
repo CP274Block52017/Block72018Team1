@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -14,8 +15,17 @@ public class Node {
 	
 	private Network network;
 	
+	private File checker;
+	private boolean isFirstNode;
+	
 	public Node(int publicKey, int secretKey) {
-		localChain = new BlockChain();
+		checker = new File("./SPAMCOIN.chain");
+		isFirstNode = !checker.exists();
+		if(isFirstNode) {
+			localChain = new BlockChain();
+		}else {
+			localChain = BlockIO.load();
+		}
 		
 		this.publicKey = publicKey;
 		this.privateKey = secretKey;
@@ -61,11 +71,11 @@ public class Node {
 	}
 	
 	public double getBalance() {
-		double balance = 0.0;
+		double balance = 0;
 		ArrayList<Transaction> transactions = localChain.getAllTransactions();
 	
 		for(Transaction transaction : transactions) {
-			if(transaction.getRecieverKey() == publicKey) {
+			if(transaction.getReceiverKey() == publicKey) {
 				balance += transaction.getAmount();
 			} else if(transaction.getSenderKey() == publicKey) {
 				balance -= transaction.getAmount();
@@ -91,8 +101,6 @@ public class Node {
 	public void processNewBlock(Block block) {
 		if(localChain.processNewBlock(block)) {
 			System.out.println(this + " has accepted a new block! Their chain now has a length of " + localChain.length());
-			System.out.println(block.getLatestTransaction().toString());
-			Database.addTransaction(publicKey,block.getLatestTransaction().toString());
 			resetWorkingBlock();
 			System.out.println(this + " has a balance of " + getBalance());
 			Database.addBalance(getPublicKey(),getBalance());
@@ -111,7 +119,6 @@ public class Node {
 		if(workingBlock.passesProofOfWork(network.getRequiredZeros())) {
 			System.out.println(this + " has completed work!");
 			pushWorkingBlock();
-			
 			return true;
 		} 
 
@@ -125,7 +132,6 @@ public class Node {
 	public void pushWorkingBlock() {
 		System.out.println(this + " is pushing a block to the network...");
 		network.broadcastNewBlock(workingBlock);
-		
 	}
 	
 	/**

@@ -1,6 +1,3 @@
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * a class that holds all information necessary for a transaction
  * @author Case Regan
@@ -8,25 +5,36 @@ import java.util.Date;
  */
 public class Transaction {
 	private int senderKey;
-	private int recieverKey;
+	private int receiverKey;
 	private int signature;
 	private int n;
 	private double amount;
-	private long id;
+	private int id;
 	// signature?
 	
-	public Transaction(int senderKey, int recieverKey, int n, long id, double amount) {
+	public Transaction(int senderKey, int recieverKey, int n, int id, double amount) {
 		this.senderKey = senderKey;
-		this.recieverKey = recieverKey;
+		this.receiverKey = recieverKey;
 		this.signature = signature;
 		this.n= n;
 		this.id=id;
 		this.amount = amount;
 	}
 	
+	public Transaction(String data) {
+		String[] datas = data.split("\\$");
+		senderKey = Integer.parseInt(datas[0]);
+		receiverKey = Integer.parseInt(datas[1]);
+		signature = Integer.parseInt(datas[2]);
+		n = Integer.parseInt(datas[3]);
+		amount = Double.parseDouble(datas[4]);
+		id = Integer.parseInt(datas[5]);
+
+	}
+	
 	public int message()
 	{
-		return senderKey+recieverKey+n+(int)amount;
+		return senderKey+receiverKey+n+(int)amount;
 	}
 	
 	public int getSignature() {
@@ -45,7 +53,7 @@ public class Transaction {
 		this.n = n;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -58,7 +66,7 @@ public class Transaction {
 	}
 
 	public void setRecieverKey(int recieverKey) {
-		this.recieverKey = recieverKey;
+		this.receiverKey = recieverKey;
 	}
 
 	public void setAmount(double amount) {
@@ -73,22 +81,26 @@ public class Transaction {
 		return senderKey;
 	}
 	
-	public int getRecieverKey() {
-		return recieverKey;
+	public int getReceiverKey() {
+		return receiverKey;
 	}
 	
 	public double getAmount() {
 		return amount;
 	}
 	
+	public String saveString() {
+		String data = senderKey + "$" + receiverKey + "$" + signature + "$" + n + "$" + amount + "$" + id;
+		return data;
+	}
+	
 	/**
 	 * explains what this transaction is with a String
 	 */
 	public String toString() {
-		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSS").format(new Date());
 		if(senderKey == Block.GENERATOR_KEY) {
-			return recieverKey + " recieved " + amount + " from mining rewards at "+timeStamp;
+			return receiverKey + " recieved " + amount + " from mining rewards";
 		}
-		return "Sender " + senderKey + " sent " + amount + " to " + recieverKey+" at "+timeStamp;
+		return "Sender " + senderKey + " sent " + amount + " to " + receiverKey;
 	}
 }

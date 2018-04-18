@@ -1,15 +1,19 @@
+/**
+ * This class is the database storing all user public keys, account balance and their transaction history,
+ * will update balance automatically whenever a transaction gets verified
+ */
 import java.sql.*;
 import java.util.*;
 
 /**
  * @author Case Regan and Jia Kang
- * This class is the database storing all user public keys, account balance and their transaction history,
- * will update balance automatically whenever a transaction gets verified
+ * creates a database named CoinData with two tables, users and transactions
+ *
+ *
  */
- 
 public class Database {
 	// change this value to suit your needs
-	public static final String PORT_NUMBER = "3306";
+	public static final String PORT_NUMBER = "8889";
 	public static Statement statement;
 
 
@@ -86,7 +90,7 @@ public class Database {
 
 			executeSQL("CREATE TABLE IF NOT EXISTS transactions ("
 					+ "PublicKey int, "					
-					+ "history varchar(255), "
+					+ "history varchar(50), "
 					+ "PRIMARY KEY (history) "
 					+ ");",
 					statement);
@@ -100,7 +104,7 @@ public class Database {
 
 
 	/**
-	 * This method adds new user to the database after the user public key is generated
+	 * This method adds new user to the database after a random user ID is generated
 	 * @param userID
 	 */
 	public static void addUsers(int userID) {
@@ -133,12 +137,12 @@ public class Database {
 	}
 	
 	/**
-	 * This method get account balance of the user
-	 * @param publicKey
-	 * @return balance of user account
+	 * This method gets the balance of user from database
+	 * @param publicKey 
+	 * @return the balance of user associated with the public key
 	 */
 	public static double getBalance(int publicKey) {
-		double balance = -1;
+		double balance = 0;
 		try {
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
@@ -153,35 +157,36 @@ public class Database {
 		
 		return balance;
 	}
-    
-    public static void receiveSpamCoin(int receiverKey, double amount) {
-        try {
-            connectServer();
-            executeSQL("USE CoinDatabase;", statement);
-
-            ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE PublicKey = '" + Integer.toString(receiverKey) + "';");
-            rs.next();
-            double balance = rs.getDouble("Balance") + amount;
-            executeSQL("UPDATE users SET Balance = '" + Double.toString(balance) + "' WHERE PublicKey = '" +
-                    Integer.toString(receiverKey) + "';", statement);
-        }catch(SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 	/**
 	 * This method uploads transaction data to the database with involved users
 	 * @param UserKey
 	 * @param history
 	 */
-	public static void addTransaction(int UserKey, String transaction) {
+	public static void addTransaction(int UserKey, String history) {
 		try{
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
 			executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(UserKey) + 
-											"', '" + transaction +  "');", statement);
+											"', '" + history +  "');", statement);
 		}
 		catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void receiveSpamCoin(int receiverKey, double amount) {
+		try {
+			connectServer();
+			executeSQL("USE CoinDatabase;", statement);
+			
+			ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE PublicKey = '" + Integer.toString(receiverKey) + "';");
+			rs.next();
+			double balance = rs.getDouble("Balance") + amount;
+			executeSQL("UPDATE users SET Balance = '" + Double.toString(balance) + "' WHERE PublicKey = '" +
+					Integer.toString(receiverKey) + "';", statement);
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -189,7 +194,7 @@ public class Database {
 	/**
 	 * This method returns an ArrayList containing all verified transaction history 
 	 * @param UserKey
-	 * @return an ArrayList containing all transaction history
+	 * @return
 	 */
 	public static ArrayList<String> getTransactionHistory(int UserKey){
 		try{
@@ -213,3 +218,4 @@ public class Database {
 		}
 	}
 }
+

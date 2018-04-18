@@ -24,10 +24,14 @@ public class BlockChain {
 		Block currentBlock;
 		Block previousBlock;
 		
-		for(int i = 1; i < chain.size(); i++) {
-			currentBlock = chain.get(i);
-			previousBlock = chain.get(i - 1);
+		for(int i = 0; i < chain.size() - 1; i++) {
+			currentBlock = chain.get(i + 1);
+			previousBlock = chain.get(i);
+
+			
 			if(!(previousBlock.generateHash().equals(currentBlock.getPreviousHash()))) {
+
+				
 				return false;
 			}
 		}
@@ -42,12 +46,12 @@ public class BlockChain {
 				senderBalance = keyBalancePairs.get(transaction.getSenderKey());
 			} 
 			
-			if(keyBalancePairs.containsKey(transaction.getRecieverKey())) {
-				recieverBalance = keyBalancePairs.get(transaction.getRecieverKey());
+			if(keyBalancePairs.containsKey(transaction.getReceiverKey())) {
+				recieverBalance = keyBalancePairs.get(transaction.getReceiverKey());
 			}
 			
 			keyBalancePairs.put(transaction.getSenderKey(), senderBalance - transaction.getAmount());
-			keyBalancePairs.put(transaction.getRecieverKey(), recieverBalance + transaction.getAmount());
+			keyBalancePairs.put(transaction.getReceiverKey(), recieverBalance + transaction.getAmount());
 		}
 		
 		for(Map.Entry<Integer, Double> keyBalancePair : keyBalancePairs.entrySet()) {
@@ -60,7 +64,6 @@ public class BlockChain {
 	}
 	
 	/**
-	 * This method calculates length of the block chain
 	 * @return the number of blocks in this chain
 	 */
 	public int length() {
@@ -76,7 +79,7 @@ public class BlockChain {
 	}
 	
 	/**
-	 * This method processes a block and adds it to the chain and returns true if it is valid, otherwise returns false
+	 * processe a block and adds it to the chain and returns true if it is valid, otherwise returns false
 	 * @param block
 	 * @return whether the block is valid
 	 */
@@ -86,12 +89,12 @@ public class BlockChain {
 		}
 		
 		addBlock(block);
-		
+
 		if(!isValid()) {
 			removeHead();
 			return false;
 		}
-		
+		BlockIO.save(this);
 		return true;
 	}
 	
@@ -101,6 +104,10 @@ public class BlockChain {
 	 */
 	public Block getHead() {
 		return chain.get(chain.size() - 1);
+	}
+	
+	public Block get(int i) {
+		return chain.get(i);
 	}
 	
 	/**

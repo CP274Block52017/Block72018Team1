@@ -1,17 +1,9 @@
 import java.io.*;
 
-/**
- *  This class implements I/O for the keys
- */
-
 public class KeysIO{
 
   private final static String FILENAME = "SPAMCOIN.wlt";
 
-  /**
-   * This method saves the user keys
-   * @param keys
-   */
   public static void save(int[] keys){
     try(PrintWriter out = new PrintWriter(FILENAME);){
       out.println(keys[0]);
@@ -22,11 +14,6 @@ public class KeysIO{
     }
   }
 
-  
-  /**
-   * This method returns the loaded keys as integer array
-   * @return loaded keys
-   */
   public static int[] load(){
     int[] loadedkeys = new int[3];
 
