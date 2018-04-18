@@ -82,11 +82,9 @@ public class Database {
 
 
 			executeSQL("CREATE TABLE IF NOT EXISTS transactions ("
-
-					+ "transactionID int, "
+					+ "PublicKey int, "					
 					+ "history varchar(50), "
-					+ "PRIMARY KEY (history), "
-					+ "FOREIGN KEY (transactionID) REFERENCES users(PublicKey)"
+					+ "PRIMARY KEY (PublicKey) "
 					+ ");",
 					statement);
 		}
@@ -107,6 +105,7 @@ public class Database {
 			connectServer();
 			executeSQL("USE CoinDatabase;", statement);
 			executeSQL("INSERT INTO users(PublicKey) VALUES ('" + Integer.toString(userID) + "');", statement);
+			executeSQL("INSERT INTO transactions(PublicKey) VALUES ('" + Integer.toString(userID) + "');", statement);
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -123,16 +122,19 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void addTransaction(Transaction t)
-	{
-		
+
+	public static void addTransaction(int UserKey, String history) {
+		try{
+			connectServer();
+			executeSQL("USE CoinDatabase;", statement);
+			executeSQL("UPDATE transaction SET history = " + history + " WHERE PublicKey = '" +
+														Integer.toString(UserKey) + "';", statement);
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
-	public static ArrayList<Transaction> getTransactionHistory()
-	{
-		return null;
-	}
-	
+
 	public static void main(String[] args) {
 		System.out.println("Execution started");
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");) {
