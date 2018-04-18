@@ -89,6 +89,6 @@ public class Transaction {
 		if(senderKey == Block.GENERATOR_KEY) {
 			return recieverKey + " recieved " + amount + " from mining rewards at "+timeStamp;
 		}
-		return "Sender " + senderKey + " sent " + amount + " to " + recieverKey;
+		return "Sender " + senderKey + " sent " + amount + " to " + recieverKey+" at "+timeStamp;
 	}
 }
