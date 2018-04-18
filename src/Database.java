@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Database {
 	// change this value to suit your needs
-	public static final String PORT_NUMBER = "8889";
+	public static final String PORT_NUMBER = "3306";
 	public static Statement statement;
 
 
