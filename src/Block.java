@@ -116,6 +116,22 @@ public class Block {
 		return transactions;
 	}
 	
+	public Transaction getLatestTransaction()
+	{
+		ArrayList<Transaction> payments = new ArrayList<Transaction>();
+		for(Transaction transaction : transactions)
+		{
+			if(transaction.getSenderKey()!=Block.GENERATOR_KEY)
+			{
+				payments.add(transaction);
+			}
+		}
+		if(payments.size()>0)
+			return payments.get(payments.size()-1);
+		else
+			return transactions.get(transactions.size()-1);
+	}
+	
 	
 	
 	/**
