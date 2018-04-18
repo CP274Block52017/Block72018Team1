@@ -1,3 +1,7 @@
+/**
+ * This class is the database storing all user public keys, account balance and their transaction history,
+ * will update balance automatically whenever a transaction gets verified
+ */
 import java.sql.*;
 import java.util.*;
 
@@ -56,6 +60,7 @@ public class Database {
 
 	/**
 	 * This method connects to the server and creates the database with tables implemented
+	 * Contact lists data use is put in icebox for this implementation
 	 */
 	public static void createDBAndUse() {
 		try {
@@ -113,6 +118,12 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * This method updates the account balance of the user whenever a transaction gets verified
+	 * @param UserKey
+	 * @param CoinBalance
+	 */
 	public static void addBalance(int UserKey, double CoinBalance) {
 		try{
 			connectServer();
@@ -125,7 +136,11 @@ public class Database {
 		}
 	}
 	
-	
+	/**
+	 * This method gets the balance of user from database
+	 * @param publicKey 
+	 * @return the balance of user associated with the public key
+	 */
 	public static double getBalance(int publicKey) {
 		double balance = -1;
 		try {
@@ -143,6 +158,11 @@ public class Database {
 		return balance;
 	}
 
+	/**
+	 * This method uploads transaction data to the database with involved users
+	 * @param UserKey
+	 * @param history
+	 */
 	public static void addTransaction(int UserKey, String history) {
 		try{
 			connectServer();
@@ -155,6 +175,11 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * This method returns an ArrayList containing all verified transaction history 
+	 * @param UserKey
+	 * @return
+	 */
 	public static ArrayList<String> getTransactionHistory(int UserKey){
 		try{
 			connectServer();
@@ -176,72 +201,5 @@ public class Database {
 			return null;
 		}
 	}
-
-	public static void main(String[] args) {
-		System.out.println("Execution started");
-		try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:" + PORT_NUMBER + "/", "root", "root");) {
-			System.out.println("Connection made");
-			Statement statement = connection.createStatement();
-
-
-			// creates the database if not existing
-			executeSQL("CREATE DATABASE IF NOT EXISTS CoinDatabase;", statement);
-
-			// makes sure that all following queries are directed at the created database
-			executeSQL("USE CoinDatabase;", statement);
-		}
-
-
-			// creates a table named users with fields id (the primary key) and the user's friends
-//			executeSQL("CREATE TABLE users ("
-//					+ "userID varchar(50), "
-//					+ "friends varchar(50), "
-//					+ "PRIMARY KEY (userID)"
-//					+ ");",
-//					statement);
-//
-//
-//			// creates a table named transactions with fields id (which is the primary key),
-//			// history (which represents the past transactions) which references
-//			// the id field of a row in the users table
-//			executeSQL("CREATE TABLE transactions ("
-//
-//					+ "transactionID varchar(50), "
-//					+ "history varchar(50), "
-//					+ "PRIMARY KEY (transactionID), "
-//					+ "FOREIGN KEY (history) REFERENCES users(userID)"
-//					+ ");",
-//					statement);
-//
-//			// populates the users table with three hardcoded values
-//			executeSQL("INSERT INTO users(userID) VALUES ('case');", statement);
-//			executeSQL("INSERT INTO users(userID) VALUES ('jia');", statement);
-//			executeSQL("INSERT INTO users(userID) VALUES ('kon');", statement);
-//
-//			// queries the CoinDatabase to get all id fields from the users table
-//			ResultSet userIDs = executeSELECT("SELECT userID FROM users;", statement);
-//
-//			ArrayList<String> ids = new ArrayList<String>();
-//
-//			// iterates through the query results and records the values in a pair of ArrayLists to avoid some concurrency problems
-//			while(userIDs.next()) {
-//
-//				String id = userIDs.getString("userID");
-//				ids.add(id);
-//			}
-//
-//			// populates the projects table using values based on the queried ones
-//			for(int i = 0; i < ids.size(); i++) {
-//
-//				executeSQL("INSERT INTO transactions VALUES ('" + Integer.toString(i) + "', '" + ids.get(i) +  "');", statement);
-//			}
-
-		catch(SQLException e) {
-			e.printStackTrace();
-		}
-//
-//			System.out.println("Finished, program exiting");
-//
-//  
-	}
 }
+
