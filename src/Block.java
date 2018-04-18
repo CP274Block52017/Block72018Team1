@@ -1,7 +1,3 @@
-/**
- * This class represents a block storing data in the blockchain
- */
-
 import java.util.Date;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,6 +35,37 @@ public class Block {
 		
 		nonce = 0;
 	}
+
+	
+	public Block(String blockString, boolean first) {
+
+		String[] string = blockString.split("\\|");
+
+		hash = string[0];
+
+		
+		if(!first) {
+			
+
+			previousHash = string[1];
+			
+
+			
+			timestamp = Long.parseLong(string[2]);
+			transactions = new ArrayList<Transaction>();
+			nonce = Long.parseLong(string[3]);
+			for(int i = 4; i < string.length; i++) {
+				transactions.add(new Transaction(string[i]));
+			}
+		}else {
+			transactions = new ArrayList<Transaction>();
+			previousHash = "";
+			
+			timestamp = 0;
+			
+			nonce = 0;
+		}
+	}
 	
 	/**
 	 * generates and returns a SHA256 hash that is unique to this block
@@ -47,16 +74,16 @@ public class Block {
 	public String generateHash() {
 		String transactionsString = "";
 		for(Transaction transaction : transactions) {
-			transactionsString += transaction.getSenderKey() + "|" + transaction.getRecieverKey() + "|" + transaction.getAmount() + "\n";
+			transactionsString += transaction.getSenderKey() + "|" + transaction.getReceiverKey() + "|" + transaction.getAmount() + "\n";
 		}
 		hash = new SHA256Hasher().hash(previousHash + nonce + transactionsString + timestamp);
 		return hash;
 	}
 
 	/**
-	 * This method evaluates if a block passes proof of work
+	 * 
 	 * @param zeroCount
-	 * @return true if block passes proof of work
+	 * @return
 	 */
 	public boolean passesProofOfWork(int zeroCount) {
 		generateHash();
@@ -70,7 +97,7 @@ public class Block {
 	}
 	
 	/**
-	 * adds a new transaction to this block's storage
+	 * adds a new tranaction to this block's storage
 	 * @param transaction
 	 */
 	public void processNewTransaction(Transaction transaction) {
@@ -90,11 +117,13 @@ public class Block {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//int _signature, int _senderPK, int _senderNValue, int _cipherText
 		int ciphertext = (int) (Math.pow(transaction.message(), publicKey) % n_value);
 		SignatureVerifier sv = new SignatureVerifier(transaction.getSignature(),transaction.getSenderKey(),transaction.getN(),ciphertext);
 		if(sv.verify())
 		{
 			transactions.add(transaction);
+			Database.addTransaction(publicKey,transaction.toString());
 		}
 		
 	}
@@ -109,26 +138,10 @@ public class Block {
 
 	/**
 	 * gets every transaction stored by this block
-	 * @return an ArrayList containing all transactions
+	 * @return
 	 */
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
-	}
-	
-	public Transaction getLatestTransaction()
-	{
-		ArrayList<Transaction> payments = new ArrayList<Transaction>();
-		for(Transaction transaction : transactions)
-		{
-			if(transaction.getSenderKey()!=Block.GENERATOR_KEY)
-			{
-				payments.add(transaction);
-			}
-		}
-		if(payments.size()>0)
-			return payments.get(payments.size()-1);
-		else
-			return transactions.get(transactions.size()-1);
 	}
 	
 	
@@ -152,5 +165,17 @@ public class Block {
 		Block genesis = new Block("");
 		genesis.timestamp = 0;
 		return genesis;
+	}
+	
+	
+	public String toString() {
+		String blockString = hash + "|" + previousHash + "|" + timestamp + "|" + nonce + "|";
+		for(int i = 0; i < transactions.size() - 1; i++) {
+			blockString += transactions.get(i).saveString() + "|";
+		}
+		if(transactions.size() != 0) {
+			blockString += transactions.get(transactions.size() - 1).saveString(); 
+		}
+		return blockString;
 	}
 }
