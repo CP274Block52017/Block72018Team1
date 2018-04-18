@@ -27,7 +27,7 @@ public class Node {
 	 * resets the block that this node is trying to complete a proof of work for
 	 */
 	private void resetWorkingBlock() {
-		workingBlock = new Block(localChain.getHead().generateHash(), new Transaction(Block.GENERATOR_KEY, publicKey, 1.0));
+		workingBlock = new Block(localChain.getHead().generateHash(), new Transaction(Block.GENERATOR_KEY, publicKey, 0, 0, 1.0));
 	}
 	
 	/**

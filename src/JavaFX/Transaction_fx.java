@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -72,10 +76,29 @@ public class Transaction_fx extends BorderPane implements PaneState {
 				String amount = amountField.getText();
 				String receiver = receiverField.getText();
 				System.out.println("SENDING: " + amount + " SP to " + receiver);
-				Transaction t = new Transaction(frame.getLocalNode().getPublicKey(), Integer.parseInt(receiverField.getText()), Double.parseDouble(amountField.getText()));
+				int publicKey=0;
+				int privateKey;
+				int n_value=0;
+				int message;
+				FileReader filereader;
+				BufferedReader buffered;
+				String FILENAME = "SPAMCOIN.wlt";
+				try {
+					filereader = new FileReader(FILENAME);
+					buffered = new BufferedReader(filereader);
+					publicKey = Integer.parseInt(buffered.readLine());
+					privateKey = Integer.parseInt(buffered.readLine());
+					n_value = Integer.parseInt(buffered.readLine());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				Transaction t = new Transaction(publicKey, Integer.parseInt(receiverField.getText()), n_value,Database.getTransactionHistory().size()+1, Double.parseDouble(amountField.getText()));
+				SignatureGenerator siggen = new SignatureGenerator(t.message());
+				t.setSignature(siggen.signature());
+				
 				frame.getLocalNode().pushTransaction(t);
 				
-				Database.addTransaction(t);
+				
 				frame.updateBalance();
 				
 			}
