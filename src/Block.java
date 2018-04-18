@@ -1,3 +1,7 @@
+/**
+ * This class represents a block storing data in the blockchain
+ */
+
 import java.util.Date;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -50,9 +54,9 @@ public class Block {
 	}
 
 	/**
-	 * 
+	 * This method evaluates if a block passes proof of work
 	 * @param zeroCount
-	 * @return
+	 * @return true if block passes proof of work
 	 */
 	public boolean passesProofOfWork(int zeroCount) {
 		generateHash();
@@ -66,7 +70,7 @@ public class Block {
 	}
 	
 	/**
-	 * adds a new tranaction to this block's storage
+	 * adds a new transaction to this block's storage
 	 * @param transaction
 	 */
 	public void processNewTransaction(Transaction transaction) {
@@ -86,7 +90,6 @@ public class Block {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//int _signature, int _senderPK, int _senderNValue, int _cipherText
 		int ciphertext = (int) (Math.pow(transaction.message(), publicKey) % n_value);
 		SignatureVerifier sv = new SignatureVerifier(transaction.getSignature(),transaction.getSenderKey(),transaction.getN(),ciphertext);
 		if(sv.verify())
@@ -107,7 +110,7 @@ public class Block {
 
 	/**
 	 * gets every transaction stored by this block
-	 * @return
+	 * @return an ArrayList containing all transactions
 	 */
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
