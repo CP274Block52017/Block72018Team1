@@ -1,0 +1,1 @@
+# SpamCoin ~Barebones Cryptocurrency Implementation~
